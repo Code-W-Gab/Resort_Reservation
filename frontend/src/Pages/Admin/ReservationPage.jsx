@@ -1,7 +1,9 @@
+import Header from "../../Components/Admin/Header";
+
 export default function ReservationPage() {
   return(
-    <div>
-      Reservation Page
-    </div>
+    <main>
+      <Header/>
+    </main>
   )
 }

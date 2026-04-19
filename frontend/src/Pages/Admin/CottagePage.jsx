@@ -1,7 +1,9 @@
+import Header from "../../Components/Admin/Header";
+
 export default function CottagePage() {
   return(
-    <div>
-      Cottage Page
-    </div>
+    <main>
+      <Header/>
+    </main>
   )
 }
