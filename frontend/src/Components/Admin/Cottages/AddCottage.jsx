@@ -14,7 +14,7 @@ export default function AddCottage() {
       {isAddCottageOpenModal && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <AddCottageModal/>
+            <AddCottageModal onClose={() => setIsAddCottageOpenModal(false)}/>
           </div>
         </div>
       )}
