@@ -156,7 +156,6 @@ export default function AddCottageModal({ onClose }) {
             </div>
           )}
         </div>
-
         <div className='flex flex-col gap-2 mt-6'>
           <label className='font-semibold'>Amenities:</label>
           <input 
