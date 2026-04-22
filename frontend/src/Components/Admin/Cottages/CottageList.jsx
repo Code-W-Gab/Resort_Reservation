@@ -4,9 +4,22 @@ import cabin from '/cabin.jpg'
 import { SquarePen, Trash2 } from 'lucide-react'
 import DeleteModal from '../DeleteModal'
 import { truncateString } from '../../../Utils/truncate'
+import { DeleteCottage } from '../../../Service/cottageService'
+import toast from 'react-hot-toast'
 
 export default function CottageList({ cottages, fetchCottage }) {
   const [isDeleteCottageModalOpen, setIsDeleteCottageModalOpen] = useState(false)
+  const [selectedId, setSelectedId] = useState(null)
+
+  function handleDeleteCottage() {
+    DeleteCottage(selectedId)
+      .then(res => {
+        toast.success("Deleted Successfully!")
+        setIsDeleteCottageModalOpen(false)
+        fetchCottage()
+      })
+      .catch(err => console.log(err))
+  }
 
   return(
     <main className='p-6 mb-5 bg-white mx-20 rounded-lg shadow-md'>
@@ -40,7 +53,10 @@ export default function CottageList({ cottages, fetchCottage }) {
                     <SquarePen size={20}/>
                     <span>Edit</span>
                   </button>
-                  <button onClick={() => setIsDeleteCottageModalOpen(true)} className='flex items-center justify-center border border-red-600 text-white w-15 rounded-sm py-2'>
+                  <button onClick={() => {
+                    setIsDeleteCottageModalOpen(true)
+                    setSelectedId(cottage._id)
+                  }} className='flex items-center justify-center border border-red-600 text-white w-15 rounded-sm py-2'>
                     <Trash2 size={20} className='text-red-600'/>
                   </button>
                 </div>
@@ -53,7 +69,7 @@ export default function CottageList({ cottages, fetchCottage }) {
       {isDeleteCottageModalOpen && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <DeleteModal onClose={() => setIsDeleteCottageModalOpen(false)}/>
+            <DeleteModal onClose={() => setIsDeleteCottageModalOpen(false)} onDelete={() => handleDeleteCottage()}/>
           </div>
         </div>
       )}
