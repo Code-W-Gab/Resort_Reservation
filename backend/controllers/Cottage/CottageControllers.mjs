@@ -9,6 +9,15 @@ const CottageController = {
     } catch (error) {
       next(error)
     }
+  },
+
+  async getCottage (req, res, next) {
+    try {
+      const cottages = await CottageSchema.find()
+      res.status(200).json(cottages)
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
