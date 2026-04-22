@@ -3,6 +3,7 @@ import AddCottage from './AddCottage'
 import cabin from '/cabin.jpg'
 import { SquarePen, Trash2 } from 'lucide-react'
 import DeleteModal from '../DeleteModal'
+import { truncateString } from '../../../Utils/truncate'
 
 export default function CottageList({ cottages, fetchCottage }) {
   const [isDeleteCottageModalOpen, setIsDeleteCottageModalOpen] = useState(false)
@@ -21,7 +22,7 @@ export default function CottageList({ cottages, fetchCottage }) {
               </div>
               <div className='p-4'>
                 <h1 className='text-xl font-semibold'>{cottage.CottageName}</h1>
-                <p className='text-gray-500 text-md py-2'>{cottage.Descriptions}</p>
+                <p className='text-gray-500 text-md py-2'>{truncateString(cottage.Descriptions, 150)}</p>
                 <div className='flex items-center justify-between mt-2'>
                   <p>Day Tour:</p>
                   <p>₱{cottage.DayTourPrice}</p>
