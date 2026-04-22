@@ -1,7 +1,7 @@
 import { useState } from "react"
 import AddCottageModal from "./AddCottageModal"
 
-export default function AddCottage() {
+export default function AddCottage({ fetchCottage }) {
   const [isAddCottageOpenModal, setIsAddCottageOpenModal] = useState(false)
   
   return(
@@ -14,7 +14,7 @@ export default function AddCottage() {
       {isAddCottageOpenModal && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <AddCottageModal onClose={() => setIsAddCottageOpenModal(false)}/>
+            <AddCottageModal onClose={() => setIsAddCottageOpenModal(false)} fetchCottage={fetchCottage}/>
           </div>
         </div>
       )}

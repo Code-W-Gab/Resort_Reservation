@@ -3,7 +3,7 @@ import { Upload, X } from 'lucide-react'
 import {AddCottage} from '../../../Service/cottageService'
 import toast from 'react-hot-toast'
 
-export default function AddCottageModal({ onClose }) {
+export default function AddCottageModal({ onClose, fetchCottage }) {
   const [cottageName, setCottageName] = useState("")
   const [cottageType, setCottageType] = useState("")
   const [descriptions, setDescriptions] = useState("")
@@ -74,6 +74,7 @@ export default function AddCottageModal({ onClose }) {
         setOvernightPrice("")
         setAmenities("")
         onClose()
+        fetchCottage()
       })
       .catch(err => console.log(err))
   }
