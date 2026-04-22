@@ -18,6 +18,17 @@ const CottageController = {
     } catch (error) {
       next(error)
     }
+  },
+
+  async deleteCottage (req, res, next) {
+    try {
+      const cottageId = req.params.id
+      const cottage = await CottageSchema.findByIdAndDelete(cottageId)
+      if (!cottage) return res.status(400).json({ message: "Cottage not found!"})
+      res.status(200).json({ message: "Cottage successfully deleted!"})
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
