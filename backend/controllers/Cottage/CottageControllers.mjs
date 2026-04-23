@@ -29,6 +29,20 @@ const CottageController = {
     } catch (error) {
       next(error)
     }
+  },
+
+  async updateCottage (req, res, next) {
+    try {
+      const updateCottage = await CottageSchema.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true }
+      )
+      if (!updateCottage) return res.status(404).json({ message: "Cottage not found!" })
+      res.status(200).json(updateCottage)
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
