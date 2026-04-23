@@ -20,6 +20,16 @@ const CottageController = {
     }
   },
 
+  async getCottageById (req, res, next) {
+    try {
+      const cottage = await CottageSchema.findById(req.params.id)  
+      if (!cottage) return res.status(400).json({ message: "Cottage not found!" })
+      res.status(200).json(cottage)
+    } catch (error) {
+      next(error)
+    }
+  },
+
   async deleteCottage (req, res, next) {
     try {
       const cottageId = req.params.id

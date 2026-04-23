@@ -35,8 +35,8 @@ export default function CottageList({ cottages, fetchCottage }) {
               </div>
               <div className='p-4'>
                 <h1 className='text-xl font-semibold'>{cottage.CottageName}</h1>
-                <p className='text-gray-500 text-md py-2'>{truncateString(cottage.Descriptions, 150)}</p>
-                <div className='flex items-center justify-between mt-2'>
+                <p className='text-gray-500 text-md py-2 h-15'>{truncateString(cottage.Descriptions, 87)}</p>
+                <div className='flex items-center justify-between mt-3'>
                   <p>Day Tour:</p>
                   <p>₱{cottage.DayTourPrice}</p>
                 </div>
