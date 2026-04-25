@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Upload, X } from 'lucide-react'
-import { GetCottageById } from '../../../Service/cottageService'
-// import toast from 'react-hot-toast'
+import { GetCottageById, UpdateCottage } from '../../../Service/cottageService'
+import toast from 'react-hot-toast'
 
 export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
   const [cottageName, setCottageName] = useState("")
@@ -14,6 +14,7 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
 
   const [isDragging, setIsDragging] = useState(false)
   const [images, setImages] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const fileInputRef = useRef(null)
   const imagePreviews = useMemo(
     () => images.map((file) => ({ file, url: URL.createObjectURL(file) })),
@@ -73,9 +74,25 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
 
   useEffect(() => {
     fetchCottageById()
-  }, [])
+  }, [id])
 
-
+  const handleUpdateCottage = () => {
+    setIsLoading(true)
+    UpdateCottage(id, cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities)
+      .then(res => {
+        console.log("Update response:", res)
+        toast.success("Updated Successfully!")
+        fetchCottage()
+        onClose()
+      })
+      .catch(err => {
+        console.error("Update error:", err)
+        toast.error("Failed to update cottage")
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
   return(
     <main className='bg-white w-200 h-[85vh] rounded-xl overflow-hidden flex flex-col'>
       <header className='h-20 flex items-center justify-between text-white bg-blue-500 px-6 w-full shrink-0'>
@@ -227,8 +244,8 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
         </div>
 
         <div className='grid grid-cols-2 gap-3 mt-7'>
-          <button onClick={onClose} className='border border-gray-500 text-gray-500 w-full py-2.5 rounded-md font-semibold'>Cancel</button>
-          <button className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Update Cottage</button>
+          <button onClick={onClose} disabled={isLoading} className='border border-gray-500 text-gray-500 w-full py-2.5 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed'>Cancel</button>
+          <button onClick={handleUpdateCottage} disabled={isLoading} className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed'>{isLoading ? 'Updating...' : 'Update Cottage'}</button>
         </div>
       </div>
     </main>
