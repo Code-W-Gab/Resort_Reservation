@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Upload, X } from 'lucide-react'
-import {AddCottage} from '../../../Service/cottageService'
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
 
 export default function UpdateCottageModal({ onClose, fetchCottage }) {
   const [cottageName, setCottageName] = useState("")
@@ -57,32 +56,11 @@ export default function UpdateCottageModal({ onClose, fetchCottage }) {
     fileInputRef.current?.click()
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault() // Prevent default form actio
-    if (!cottageName.trim() || !cottageType.trim() || !descriptions.trim() || !capacity.trim() || !dayTourPrice.trim() || !overnightPrice.trim() || !amenities.trim() ){
-      toast.error("Contents cannot be empty.")
-      return
-    }
-    AddCottage(cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities)
-      .then(res => {
-        toast.success("Added Successfully!")
-        setCottageName("")
-        setCottageType("")
-        setDescriptions("")
-        setCapacity("")
-        setDayTourPrice("")
-        setOvernightPrice("")
-        setAmenities("")
-        onClose()
-        fetchCottage()
-      })
-      .catch(err => console.log(err))
-  }
 
   return(
     <main className='bg-white w-200 h-[85vh] rounded-xl overflow-hidden flex flex-col'>
       <header className='h-20 flex items-center justify-between text-white bg-blue-500 px-6 w-full shrink-0'>
-        <h1 className='text-xl font-semibold'>Add New Cottage</h1>
+        <h1 className='text-xl font-semibold'>Update Cottage</h1>
         <button className='rounded-full p-1 hover:bg-gray-400' onClick={onClose}><X /></button>
       </header>
       <div className='px-6 py-6 overflow-y-auto'>
@@ -231,7 +209,7 @@ export default function UpdateCottageModal({ onClose, fetchCottage }) {
 
         <div className='grid grid-cols-2 gap-3 mt-7'>
           <button onClick={onClose} className='border border-gray-500 text-gray-500 w-full py-2.5 rounded-md font-semibold'>Cancel</button>
-          <button onClick={handleSubmit} className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Add Cottage</button>
+          <button className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Add Cottage</button>
         </div>
       </div>
     </main>

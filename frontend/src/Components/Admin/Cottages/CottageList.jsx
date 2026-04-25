@@ -6,9 +6,11 @@ import DeleteModal from '../DeleteModal'
 import { truncateString } from '../../../Utils/truncate'
 import { DeleteCottage } from '../../../Service/cottageService'
 import toast from 'react-hot-toast'
+import UpdateCottageModal from './UpdateCottageModel'
 
 export default function CottageList({ cottages, fetchCottage }) {
   const [isDeleteCottageModalOpen, setIsDeleteCottageModalOpen] = useState(false)
+  const [isUpdateCottageModalOpen, setIsUpdateCottageModalOpen] = useState(false)
   const [selectedId, setSelectedId] = useState(null)
 
   function handleDeleteCottage() {
@@ -49,7 +51,7 @@ export default function CottageList({ cottages, fetchCottage }) {
                   <p>{cottage.Capacity} guests</p>
                 </div>
                 <div className='mt-4 flex items-center gap-3'>
-                  <button className='flex items-center justify-center gap-2 bg-blue-600 text-white w-full rounded-sm py-2'>
+                  <button onClick={() => setIsUpdateCottageModalOpen(true)} className='flex items-center justify-center gap-2 bg-blue-600 text-white w-full rounded-sm py-2'>
                     <SquarePen size={20}/>
                     <span>Edit</span>
                   </button>
@@ -70,6 +72,14 @@ export default function CottageList({ cottages, fetchCottage }) {
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
             <DeleteModal onClose={() => setIsDeleteCottageModalOpen(false)} onDelete={() => handleDeleteCottage()}/>
+          </div>
+        </div>
+      )}
+
+      {isUpdateCottageModalOpen && (
+        <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
+          <div className="z-50">
+            <UpdateCottageModal onClose={() => setIsUpdateCottageModalOpen(false)}/>
           </div>
         </div>
       )}

@@ -104,8 +104,8 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
                 onClick={() => setCottageType("Cottage")}
                 className={`w-full py-2 rounded-md font-semibold ${
                   cottageType === 'Cottage' 
-                    ? 'border-3 border-blue-500 bg-blue-100 text-blue-500' 
-                    : 'border-3 border-gray-500 text-gray-500'
+                    ? 'border-2 border-blue-500 bg-blue-100 text-blue-500' 
+                    : 'border-2 border-gray-500 text-gray-500'
                 }`}>
                 Cottage
               </button>
@@ -113,8 +113,8 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
                 onClick={() => setCottageType("Cabin")} 
                 className={`w-full py-2 rounded-md font-semibold ${
                   cottageType === 'Cabin' 
-                    ? 'border-3 border-blue-500 bg-blue-100 text-blue-500' 
-                    : 'border-3 border-gray-500 text-gray-500'
+                    ? 'border-2 border-blue-500 bg-blue-100 text-blue-500' 
+                    : 'border-2 border-gray-500 text-gray-500'
                 }`}>
                 Cabin
               </button>
