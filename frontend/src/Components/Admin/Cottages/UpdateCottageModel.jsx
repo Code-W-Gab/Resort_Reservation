@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Upload, X } from 'lucide-react'
+import { GetCottageById } from '../../../Service/cottageService'
 // import toast from 'react-hot-toast'
 
-export default function UpdateCottageModal({ onClose, fetchCottage }) {
+export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
   const [cottageName, setCottageName] = useState("")
   const [cottageType, setCottageType] = useState("")
   const [descriptions, setDescriptions] = useState("")
@@ -55,6 +56,24 @@ export default function UpdateCottageModal({ onClose, fetchCottage }) {
   const openFilePicker = () => {
     fileInputRef.current?.click()
   }
+
+  function fetchCottageById() {
+    GetCottageById(id)
+      .then((res) => {
+        setCottageName(res.data.CottageName)
+        setCottageType(res.data.Type)
+        setDescriptions(res.data.Descriptions)
+        setCapacity(res.data.Capacity)
+        setDayTourPrice(res.data.DayTourPrice)
+        setOvernightPrice(res.data.OvernightPrice)
+        setAmenities(res.data.Amenities)
+      })
+      .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    fetchCottageById()
+  }, [])
 
 
   return(
@@ -209,7 +228,7 @@ export default function UpdateCottageModal({ onClose, fetchCottage }) {
 
         <div className='grid grid-cols-2 gap-3 mt-7'>
           <button onClick={onClose} className='border border-gray-500 text-gray-500 w-full py-2.5 rounded-md font-semibold'>Cancel</button>
-          <button className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Add Cottage</button>
+          <button className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Update Cottage</button>
         </div>
       </div>
     </main>
