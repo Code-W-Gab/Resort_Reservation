@@ -1,3 +1,4 @@
+import Accommodations from "../../Components/User/Accommodations";
 import Explore from "../../Components/User/Explore";
 import Info from "../../Components/User/Info";
 import Header from "../../Layout/Header";
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Header/>
       <Explore/>
       <Info/>
+      <Accommodations/>
     </main>
   )
 }

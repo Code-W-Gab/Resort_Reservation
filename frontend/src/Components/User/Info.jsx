@@ -15,7 +15,7 @@ export default function Info() {
               {c.logo}
             </div>
             <h1 className='font-semibold text-2xl'>{c.title}</h1>
-            <p className='text-xl w-80 text-center'>{c.desc}</p>
+            <p className='text-xl w-80 text-center text-gray-700'>{c.desc}</p>
           </div>
         )
       })}
