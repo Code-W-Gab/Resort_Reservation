@@ -1,3 +1,4 @@
+import AccommodationList from "../../Components/User/AccommodationList";
 import Accommodations from "../../Components/User/Accommodations";
 import Explore from "../../Components/User/Explore";
 import Info from "../../Components/User/Info";
@@ -10,6 +11,7 @@ export default function HomePage() {
       <Explore/>
       <Info/>
       <Accommodations/>
+      <AccommodationList/>
     </main>
   )
 }
