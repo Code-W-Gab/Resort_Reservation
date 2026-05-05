@@ -16,7 +16,7 @@ export default function AccommodationList({ cottages }) {
                 </div>
                 <div className='p-5'>
                   <h1 className='text-2xl font-semibold'>{cottage.CottageName}</h1>
-                  <p className='text-gray-700 text-lg py-2 h-16'>{truncateString(cottage.Description || 'No description available', 87)}</p>
+                  <p className='text-gray-700 text-lg py-2 h-16'>{truncateString(cottage.Descriptions || 'No description available', 87)}</p>
 
                   <div className='flex items-center gap-2 text-gray-700 mt-5'>
                     <Users size={18}/>
