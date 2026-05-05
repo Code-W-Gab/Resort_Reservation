@@ -28,7 +28,7 @@ export default function HomePage() {
       <Explore/>
       <Info/>
       <Accommodations/>
-      <AccommodationList/>
+      <AccommodationList cottages={cottages}/>
     </main>
   )
 }
