@@ -3,6 +3,7 @@ import CalendarPage from "./Pages/Admin/CalendarPage"
 import CottagePage from "./Pages/Admin/CottagePage"
 import ReservationPage from "./Pages/Admin/ReservationPage"
 import HomePage from "./Pages/User/HomePage"
+import ReservePage from "./Pages/User/ReservePage"
 
 export default function App() {
   return(
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/calendar" element={<CalendarPage/>}/>
         <Route path="/cottage" element={<CottagePage/>}/>
         <Route path="/reservation" element={<ReservationPage/>}/>
+        <Route path="/reserve/:id" element={<ReservePage/>}/>
       </Routes>
     </main>
   )

@@ -1,6 +1,7 @@
 import cabin from '/cabin.jpg'
 import { truncateString } from '../../Utils/truncate'
 import { Users } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function AccommodationList({ cottages }) {
   return(
@@ -9,7 +10,7 @@ export default function AccommodationList({ cottages }) {
         {
           cottages.map((cottage) => {
             return(
-              <div key={cottage._id} className='border border-gray-300 rounded-lg bg-white shadow-lg'>
+              <div key={cottage._id} className='border border-gray-300 rounded-lg bg-white shadow-md hover:shadow-xl'>
                 <div className='relative'>
                   <img src={cabin} alt='cabin' className=' h-64 w-full object-cover rounded-tl-md rounded-tr-md'/>
                   <span className='absolute top-3 right-3 bg-blue-500 text-white px-5 py-1 rounded-2xl'>{cottage.Type}</span>
@@ -45,7 +46,7 @@ export default function AccommodationList({ cottages }) {
                       <span className='text-lg text-gray-700'>Starting from</span>
                       <span className='text-2xl text-blue-500'>₱{cottage.DayTourPrice}</span>
                     </div>
-                    <button className='bg-blue-500 text-white px-6 py-2 rounded-md'>Book Now</button>
+                    <Link to={`/reserve/${cottage._id}`} className='bg-blue-500 text-white px-6 py-2 rounded-md'>Book Now</Link>
                   </div>
                 </div>
               </div>
