@@ -1,7 +1,9 @@
+import BackMenuHeader from "../../Layout/BackMenuHeader";
+
 export default function ReservePage() {
   return(
     <main>
-      reserve page
+      <BackMenuHeader/>
     </main>
   )
 }
