@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import cabin from '/cabin.jpg'
-import { Users } from 'lucide-react'
+import { Users, Minus, Plus } from 'lucide-react'
 
 export default function Book() {
   const [cottageType, setCottageType] = useState("")
@@ -54,6 +54,16 @@ export default function Book() {
               <span className='text-md font-semibold text-gray-500'>Overnight</span>
               <p className='text-blue-500 text-3xl'>₱300/night</p>
             </button>
+          </div>
+        </div>
+
+        <div className='mt-8'>
+          <label className='font-semibold'>Number of Guests</label>
+          <div className='flex items-center gap-8 mt-4'>
+            <button className='border border-gray-400 rounded-full p-2'><Minus size={18}/></button>
+            <span className='text-xl'>2</span>
+            <button className='border border-gray-400 rounded-full p-2'><Plus size={18}/></button>
+            <p className='text-gray-500'>Max: 6</p>
           </div>
         </div>
       </div>
