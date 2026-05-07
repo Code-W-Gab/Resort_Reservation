@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import cabin from '/cabin.jpg'
 import { Users } from 'lucide-react'
 
 export default function Book() {
+  const [cottageType, setCottageType] = useState("")
+
   return(
     <main className='py-10 grid grid-cols-2 gap-4 px-20'>
       <div className='border border-gray-300 rounded-2xl bg-white shadow-lg'>
@@ -18,7 +21,7 @@ export default function Book() {
           <h1 className='text-xl font-semibold'>Amenities</h1>
           <div className='mt-5 flex flex-wrap gap-2 items-center'>
             <span className='bg-blue-100 px-2 py-1 rounded-sm text-sm text-blue-700'>
-              ajsdjaskdsa
+              kitchen
             </span>
           </div>
         </div>
@@ -26,16 +29,30 @@ export default function Book() {
 
       <div className='border border-gray-300 rounded-2xl bg-white shadow-lg p-6'>
         <h1 className='text-2xl font-semibold'>Book Your Stay</h1>
-        <div className='mt-6'>
+        <div className='mt-7'>
           <label className='font-semibold'>Booking Type</label>
           <div className='grid grid-cols-2 gap-4 mt-3'>
-            <button className='border-3 border-blue-500 bg-blue-100 p-4 rounded-xl'>
-              <span className='text-md font-semibold'>Day Tour</span>
-              <p className='text-blue-500 text-3xl'>100</p>
+            <button 
+              onClick={() => setCottageType("dayTour")}
+              className={`border-3 p-4 rounded-xl ${
+                cottageType === "dayTour"
+                ? 'border-blue-500 bg-blue-100'
+                : 'border-gray-300'
+              }`}
+            >
+              <span className='text-md font-semibold text-gray-500'>Day Tour</span>
+              <p className='text-blue-500 text-3xl'>₱100</p>
             </button>
-            <button className='border p-4 rounded-xl'>
-              <span className='text-md font-semibold'>Overnight</span>
-              <p className='text-blue-500 text-3xl'>300/night</p>
+            <button 
+              onClick={() => setCottageType("overnight")}
+              className={`border-3 p-4 rounded-xl ${
+                cottageType === "overnight"
+                ? 'border-blue-500 bg-blue-100'
+                : 'border-gray-300'
+              }`}
+            >
+              <span className='text-md font-semibold text-gray-500'>Overnight</span>
+              <p className='text-blue-500 text-3xl'>₱300/night</p>
             </button>
           </div>
         </div>
