@@ -23,6 +23,23 @@ export default function Book() {
           </div>
         </div>
       </div>
+
+      <div className='border border-gray-300 rounded-2xl bg-white shadow-lg p-6'>
+        <h1 className='text-2xl font-semibold'>Book Your Stay</h1>
+        <div className='mt-6'>
+          <label className='font-semibold'>Booking Type</label>
+          <div className='grid grid-cols-2 gap-4 mt-3'>
+            <button className='border-3 border-blue-500 bg-blue-100 p-4 rounded-xl'>
+              <span className='text-md font-semibold'>Day Tour</span>
+              <p className='text-blue-500 text-3xl'>100</p>
+            </button>
+            <button className='border p-4 rounded-xl'>
+              <span className='text-md font-semibold'>Overnight</span>
+              <p className='text-blue-500 text-3xl'>300/night</p>
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
