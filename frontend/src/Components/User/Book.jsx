@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import cabin from '/cabin.jpg'
 import { Users, Minus, Plus } from 'lucide-react'
 import Calendar from './Calendar'
@@ -8,6 +8,11 @@ export default function Book() {
   const [capacity, setCapacity] = useState(0)
   const [checkIn, setCheckIn] = useState(null)
   const [checkOut, setCheckOut] = useState(null)
+
+  useEffect(() => {
+    setCheckIn(null)
+    setCheckOut(null)
+  }, [cottageType])
 
   const handleDateSelect = (startDate, endDate) => {
     setCheckIn(startDate)
@@ -21,12 +26,24 @@ export default function Book() {
     return cottageType === 'dayTour' ? 0 : diffDays
   }
 
+  const calculateTotal = () => {
+    if (!checkIn) return 0
+    if (cottageType === 'dayTour') {
+      return 100
+    } else if (cottageType === 'overnight') {
+      const nights = calculateNights()
+      return nights > 0 ? nights * 300 : 0
+    }
+    return 0
+  }
+
   const formatDate = (date) => {
     if (!date) return 'Not selected'
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   }
 
   const nights = calculateNights()
+  const total = calculateTotal()
 
   return(
     <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
@@ -137,9 +154,18 @@ export default function Book() {
         <div>
           <div className='flex items-center justify-between '>
             <p className='text-gray-500 text-xl'>Total</p>
-            <h3 className='text-blue-500 text-4xl'>₱0</h3>
+            <h3 className='text-blue-500 text-4xl'>₱{total}</h3>
           </div>
-          <button className='bg-blue-500 text-white w-full py-3 rounded-lg text-lg mt-6'>Confirm Booking</button>
+          <button 
+            disabled={!checkIn}
+            className={`w-full py-3 rounded-lg text-lg mt-6 ${
+              checkIn
+                ? 'bg-blue-500 text-white cursor-pointer hover:bg-blue-600'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            Confirm Booking
+          </button>
         </div>
       </div>
     </main>
