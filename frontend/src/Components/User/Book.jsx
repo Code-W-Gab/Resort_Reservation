@@ -7,7 +7,7 @@ export default function Book() {
   const [capacity, setCapacity] = useState(0)
 
   return(
-    <main className='py-10 grid grid-cols-2 gap-4 px-20'>
+    <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
       <div className='border border-gray-300 rounded-2xl bg-white shadow-lg'>
         <img src={cabin} alt='cabin' className=' h-100 w-full object-cover rounded-tl-xl rounded-tr-xl'/>
         <div className='p-8'>
@@ -68,9 +68,31 @@ export default function Book() {
           </div>
         </div>
 
-        <div>
-          name
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-2'>
+            <label className='text-md text-gray-700 font-semibold'>Full Name *</label>
+            <input type="text" placeholder='John Smith' className='border py-2.5 px-4 rounded-xl'/>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <label className='text-md text-gray-700 font-semibold'>Email *</label>
+            <input type="email" placeholder='john@example.com' className='border py-2.5 px-4 rounded-xl'/>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <label className='text-md text-gray-700 font-semibold'>Phone</label>
+            <input type="text" placeholder='+1234567890' className='border py-2.5 px-4 rounded-xl'/>
+          </div>
         </div>
+
+        <div className='border-b border-gray-300 my-10'></div>
+
+        <div>
+          <div className='flex items-center justify-between '>
+            <p className='text-gray-500 text-xl'>Total</p>
+            <h3 className='text-blue-500 text-4xl'>₱0</h3>
+          </div>
+          <button className='bg-blue-500 text-white w-full py-3 rounded-lg text-lg mt-6'>Confirm Booking</button>
+        </div>
+        
       </div>
     </main>
   )
