@@ -68,6 +68,27 @@ export default function Book() {
           </div>
         </div>
 
+        <div>
+          <h4>Select Dates (Click start and end date)</h4>
+          <div>Calendar here</div>
+        </div>
+        <div className='flex items-center gap-6 mt-10'>
+          <div className='flex items-center gap-3'>
+            <div className='size-5 bg-blue-500 rounded-sm'></div>
+            <p className='text-sm'>Selected</p>
+          </div>
+          <div className='flex items-center gap-3'>
+            <div className='size-5 bg-gray-300 rounded-sm'></div>
+            <p className='text-sm'>Reserved</p>
+          </div>
+        </div>
+
+        <div className='bg-blue-50 p-4 rounded-lg my-8 text-gray-700'>
+          <p className='font-bold'>Check-in:</p>
+          <p className='font-bold'>Check-out:</p>
+          <p className='font-bold'>Nights:</p>
+        </div>
+
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Full Name *</label>
