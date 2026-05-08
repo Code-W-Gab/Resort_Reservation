@@ -1,10 +1,32 @@
 import { useState } from 'react'
 import cabin from '/cabin.jpg'
 import { Users, Minus, Plus } from 'lucide-react'
+import Calendar from './Calendar'
 
 export default function Book() {
   const [cottageType, setCottageType] = useState("")
   const [capacity, setCapacity] = useState(0)
+  const [checkIn, setCheckIn] = useState(null)
+  const [checkOut, setCheckOut] = useState(null)
+
+  const handleDateSelect = (startDate, endDate) => {
+    setCheckIn(startDate)
+    setCheckOut(endDate)
+  }
+
+  const calculateNights = () => {
+    if (!checkIn || !checkOut) return 0
+    const diffTime = Math.abs(checkOut - checkIn)
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return cottageType === 'dayTour' ? 0 : diffDays
+  }
+
+  const formatDate = (date) => {
+    if (!date) return 'Not selected'
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  }
+
+  const nights = calculateNights()
 
   return(
     <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
@@ -68,25 +90,31 @@ export default function Book() {
           </div>
         </div>
 
-        <div>
-          <h4>Select Dates (Click start and end date)</h4>
-          <div>Calendar here</div>
-        </div>
-        <div className='flex items-center gap-6 mt-10'>
-          <div className='flex items-center gap-3'>
-            <div className='size-5 bg-blue-500 rounded-sm'></div>
-            <p className='text-sm'>Selected</p>
-          </div>
-          <div className='flex items-center gap-3'>
-            <div className='size-5 bg-gray-300 rounded-sm'></div>
-            <p className='text-sm'>Reserved</p>
-          </div>
+        <div className='mt-8'>
+          <label className='font-semibold block mb-3'>Select Dates {cottageType === 'overnight' ? '(Click start and end date)' : '(Click to select day)'}</label>
+          {cottageType ? (
+            <Calendar 
+              bookingType={cottageType}
+              onDateSelect={handleDateSelect}
+              checkIn={checkIn}
+              checkOut={checkOut}
+              reservedDates={[]}
+            />
+          ) : (
+            <div className='bg-gray-100 p-4 rounded-lg text-gray-500 text-center'>
+              Please select a booking type first
+            </div>
+          )}
         </div>
 
         <div className='bg-blue-50 p-4 rounded-lg my-8 text-gray-700'>
-          <p className='font-bold'>Check-in:</p>
-          <p className='font-bold'>Check-out:</p>
-          <p className='font-bold'>Nights:</p>
+          <p className='font-bold'>Check-in: <span className='text-blue-500'>{formatDate(checkIn)}</span></p>
+          {cottageType === 'overnight' && (
+            <>
+              <p className='font-bold'>Check-out: <span className='text-blue-500'>{formatDate(checkOut)}</span></p>
+              <p className='font-bold'>Nights: <span className='text-blue-500'>{nights}</span></p>
+            </>
+          )}
         </div>
 
         <div className='flex flex-col gap-4'>
@@ -113,7 +141,6 @@ export default function Book() {
           </div>
           <button className='bg-blue-500 text-white w-full py-3 rounded-lg text-lg mt-6'>Confirm Booking</button>
         </div>
-        
       </div>
     </main>
   )
