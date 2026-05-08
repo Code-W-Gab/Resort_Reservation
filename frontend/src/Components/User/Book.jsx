@@ -67,6 +67,10 @@ export default function Book() {
             <p className='text-gray-500'>Max: 6</p>
           </div>
         </div>
+
+        <div>
+          name
+        </div>
       </div>
     </main>
   )
