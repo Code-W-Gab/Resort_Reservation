@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import connectDB from './config/db.mjs'
 import CottageRoutes from './routes/CottageRoutes.mjs'
+import ReserveRoutes from './routes/ReserveRoutes.mjs'
 
 const app = express()
 app.use(express.json())
@@ -15,6 +16,7 @@ connectDB()
 // Routes
 // Admin Cottage Routes
 app.use('/cottage', CottageRoutes) 
+app.use('/reserve', ReserveRoutes)
 
 // Global Error Handler
 app.use((err, req, res, next) => {

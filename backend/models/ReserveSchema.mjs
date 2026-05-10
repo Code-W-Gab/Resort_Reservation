@@ -42,4 +42,4 @@ const ReserveSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export default mongoose.model('Reserve', CottageSchema)
+export default mongoose.model('Reserve', ReserveSchema)
