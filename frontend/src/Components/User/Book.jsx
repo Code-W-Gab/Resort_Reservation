@@ -4,8 +4,14 @@ import { Users, Minus, Plus } from 'lucide-react'
 import Calendar from './Calendar'
 import { GetCottageById } from '../../Service/cottageService'
 import { useParams } from 'react-router-dom'
+import { reserveCottage } from '../../Service/reserveService'
+import toast from 'react-hot-toast'
 
 export default function Book() {
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [cottageType, setCottageType] = useState("")
   const [capacity, setCapacity] = useState(0)
   const [checkIn, setCheckIn] = useState(null)
@@ -65,6 +71,58 @@ export default function Book() {
         })
     }
   }, [id])
+
+  function handleConfirmBooking() {
+    // Validation
+    if (!fullName.trim() || !email.trim() || !phone.trim()) {
+      toast.error("Please fill in all required fields")
+      return
+    }
+
+    if (!checkIn) {
+      toast.error("Please select a date")
+      return
+    }
+
+    if (cottageType === 'overnight' && !checkOut) {
+      toast.error("Please select check-out date")
+      return
+    }
+
+    const bookingData = {
+      CottageName: cottage.CottageName,
+      Capacity: capacity,
+      DayTourDate: cottageType === 'dayTour' ? checkIn : null,
+      CheckInDate: cottageType === 'overnight' ? checkIn : null,
+      CheckOutDate: cottageType === 'overnight' ? checkOut : null,
+      FullName: fullName,
+      Email: email,
+      Phone: parseInt(phone),
+      Total: total
+    }
+    reserveCottage(
+      bookingData.CottageName,
+      bookingData.Capacity,
+      bookingData.DayTourDate,
+      bookingData.CheckInDate,
+      bookingData.CheckOutDate,
+      bookingData.FullName,
+      bookingData.Email,
+      bookingData.Phone,
+      bookingData.Total
+    )
+      .then(res => {
+        toast.success("Booking confirmed successfully!")
+        // Reset form
+        setFullName("")
+        setEmail("")
+        setPhone("")
+        setCheckIn(null)
+        setCheckOut(null)
+        setCottageType("")
+      })
+      .catch(err => console.log(err))
+  }
 
   
   return(
@@ -173,15 +231,33 @@ export default function Book() {
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Full Name *</label>
-            <input type="text" placeholder='John Smith' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
+            <input 
+              type="text" 
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder='John Smith' 
+              className='border border-gray-400 py-2.5 px-4 rounded-xl'
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Email *</label>
-            <input type="email" placeholder='john@example.com' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
+            <input 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder='john@example.com' 
+              className='border border-gray-400 py-2.5 px-4 rounded-xl'
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Phone</label>
-            <input type="text" placeholder='+1234567890' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
+            <input 
+              type="text" 
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder='+1234567890' 
+              className='border border-gray-400 py-2.5 px-4 rounded-xl'
+            />
           </div>
         </div>
 
@@ -194,6 +270,7 @@ export default function Book() {
           </div>
           <button 
             disabled={!checkIn}
+            onClick={handleConfirmBooking}
             className={`w-full py-3 rounded-lg text-lg mt-6 ${
               checkIn
                 ? 'bg-blue-500 text-white cursor-pointer hover:bg-blue-600'

@@ -129,8 +129,8 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
       </div>
 
       <div className='grid grid-cols-7 gap-2 mb-4'>
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => (
-          <div key={day} className='h-10 flex items-center justify-center font-semibold text-gray-600 text-sm'>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+          <div key={`day-${index}`} className='h-10 flex items-center justify-center font-semibold text-gray-600 text-sm'>
             {day}
           </div>
         ))}
