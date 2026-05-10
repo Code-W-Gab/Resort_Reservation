@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function AccommodationList({ cottages }) {
   return(
-    <main className='px-20 py-10'>
+    <main className='px-30 py-10'>
       <div className='grid grid-cols-3 gap-6'>
         {
           cottages.map((cottage) => {

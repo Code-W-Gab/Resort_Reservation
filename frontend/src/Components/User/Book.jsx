@@ -137,15 +137,15 @@ export default function Book() {
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Full Name *</label>
-            <input type="text" placeholder='John Smith' className='border py-2.5 px-4 rounded-xl'/>
+            <input type="text" placeholder='John Smith' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Email *</label>
-            <input type="email" placeholder='john@example.com' className='border py-2.5 px-4 rounded-xl'/>
+            <input type="email" placeholder='john@example.com' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-md text-gray-700 font-semibold'>Phone</label>
-            <input type="text" placeholder='+1234567890' className='border py-2.5 px-4 rounded-xl'/>
+            <input type="text" placeholder='+1234567890' className='border border-gray-400 py-2.5 px-4 rounded-xl'/>
           </div>
         </div>
 
