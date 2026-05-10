@@ -4,6 +4,7 @@ import CottagePage from "./Pages/Admin/CottagePage"
 import ReservationPage from "./Pages/Admin/ReservationPage"
 import HomePage from "./Pages/User/HomePage"
 import ReservePage from "./Pages/User/ReservePage"
+import BookingConfirmPage from "./Pages/User/BookingConfirmPage"
 
 export default function App() {
   return(
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/cottage" element={<CottagePage/>}/>
         <Route path="/reservation" element={<ReservationPage/>}/>
         <Route path="/reserve/:id" element={<ReservePage/>}/>
+        <Route path="/reserve/confirm" element={<BookingConfirmPage/>}/>
       </Routes>
     </main>
   )
