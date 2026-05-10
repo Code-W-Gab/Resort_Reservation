@@ -5,7 +5,7 @@ export default function ReservePage() {
   return(
     <main>
       <BackMenuHeader/>
-      <Book/>
+      <Book/> 
     </main>
   )
 }
