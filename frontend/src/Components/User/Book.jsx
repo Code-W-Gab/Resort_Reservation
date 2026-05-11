@@ -6,6 +6,7 @@ import { GetCottageById } from '../../Service/cottageService'
 import { useParams } from 'react-router-dom'
 import { reserveCottage } from '../../Service/reserveService'
 import toast from 'react-hot-toast'
+import BookingConfirm from '../User/BookingConfirm'
 
 export default function Book() {
   const [fullName, setFullName] = useState("")
@@ -19,6 +20,8 @@ export default function Book() {
   const { id } = useParams()
   const [cottage, setCottage] = useState()
   const [loading, setLoading] = useState(true)
+  const [confirmBooking, setConfirmBooking] = useState(false)
+  const [confirmName, setConfirmName] = useState("")
 
   useEffect(() => {
     setCheckIn(null)
@@ -113,7 +116,8 @@ export default function Book() {
     )
       .then(res => {
         toast.success("Booking confirmed successfully!")
-        // Reset form
+        setConfirmName(fullName)
+        setConfirmBooking(true)
         setFullName("")
         setEmail("")
         setPhone("")
@@ -281,6 +285,14 @@ export default function Book() {
           </button>
         </div>
       </div>
+
+      {confirmBooking && (
+        <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
+          <div className="z-50">
+            <BookingConfirm name={confirmName} cottageName={cottage.CottageName}/>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

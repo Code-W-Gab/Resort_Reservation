@@ -1,6 +1,6 @@
 import { Check } from "lucide-react"
 import { Link } from "react-router-dom"
-export default function BookingConfirm() {
+export default function BookingConfirm({name, cottageName}) {
   return(
     <main className="flex items-center justify-center min-h-screen">
       <div className="bg-white shadow-2xl rounded-xl border border-gray-200 p-10 w-100">
@@ -9,7 +9,7 @@ export default function BookingConfirm() {
             <Check size={35} className="text-green-700"/>
           </div>
           <h1 className="text-2xl font-semibold">Booking Confirmed!</h1>
-          <p className="text-sm text-gray-600">Thank you, Gab! Your reservation for Tropical Paradise Cottage has been received.</p>
+          <p className="text-sm text-gray-600">Thank you, {name}! Your reservation for {cottageName} has been received.</p>
         </div>
         <div className="bg-green-50 mt-6 p-4 text-xs flex flex-col gap-2">
           <div className="flex items-center gap-2">
