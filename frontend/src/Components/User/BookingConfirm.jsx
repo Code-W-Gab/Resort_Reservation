@@ -1,6 +1,11 @@
 import { Check } from "lucide-react"
 import { Link } from "react-router-dom"
-export default function BookingConfirm({name, cottageName}) {
+export default function BookingConfirm({name, cottageName, capacity, type, checkIn, checkOut, total}) {
+  const formatDate = (date) => {
+    if (!date) return 'Not selected'
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  }
+
   return(
     <main className="flex items-center justify-center min-h-screen">
       <div className="bg-white shadow-2xl rounded-xl border border-gray-200 p-10 w-100">
@@ -14,19 +19,25 @@ export default function BookingConfirm({name, cottageName}) {
         <div className="bg-green-50 mt-6 p-4 text-xs flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <p className="font-bold">Check-in: </p>
-            <span className="text-gray-700">May 11, 2026</span>
+            <span className="text-gray-700">{formatDate(checkIn)}</span>
           </div>
+          {checkOut && type === 'overnight' && (
+            <div className="flex items-center gap-2">
+              <p className="font-bold">Check-out: </p>
+              <span className="text-gray-700">{formatDate(checkOut)}</span>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <p className="font-bold">Guests:</p>
-            <span className="text-gray-700">2</span>
+            <span className="text-gray-700">{capacity}</span>
           </div>
           <div className="flex items-center gap-2">
             <p className="font-bold">Type:</p>
-            <span className="text-gray-700">Day Tour</span>
+            <span className="text-gray-700">{type === 'dayTour' ? 'Day Tour' : 'Overnight'}</span>
           </div>
           <div className="flex items-center gap-2">
             <p className="font-bold">Total:</p>
-            <span className="text-gray-700">$100</span>
+            <span className="text-gray-700">₱{total}</span>
           </div>
         </div>
         <Link to={'/home'}>

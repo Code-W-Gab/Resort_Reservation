@@ -22,6 +22,11 @@ export default function Book() {
   const [loading, setLoading] = useState(true)
   const [confirmBooking, setConfirmBooking] = useState(false)
   const [confirmName, setConfirmName] = useState("")
+  const [confirmGuest, setConfirmGuest] = useState(null)
+  const [confirmCottageType, setConfirmCottageType] = useState("")
+  const [confirmCheckIn, setConfirmCheckIn] = useState(null)
+  const [confirmCheckOut, setConfirmCheckOut] = useState(null)
+  const [confirmTotal, setConfirmTotal] = useState(0)
 
   useEffect(() => {
     setCheckIn(null)
@@ -117,10 +122,16 @@ export default function Book() {
       .then(res => {
         toast.success("Booking confirmed successfully!")
         setConfirmName(fullName)
+        setConfirmGuest(capacity)
+        setConfirmCottageType(cottageType)
+        setConfirmCheckIn(checkIn)
+        setConfirmCheckOut(checkOut)
+        setConfirmTotal(total)
         setConfirmBooking(true)
         setFullName("")
         setEmail("")
         setPhone("")
+        setCapacity(0)
         setCheckIn(null)
         setCheckOut(null)
         setCottageType("")
@@ -289,7 +300,7 @@ export default function Book() {
       {confirmBooking && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <BookingConfirm name={confirmName} cottageName={cottage.CottageName}/>
+            <BookingConfirm name={confirmName} cottageName={cottage.CottageName} capacity={confirmGuest} type={confirmCottageType} checkIn={confirmCheckIn} checkOut={confirmCheckOut} total={confirmTotal}/>
           </div>
         </div>
       )}
