@@ -2,6 +2,15 @@ import cabin from '/cabin.jpg'
 import { truncateString } from '../../Utils/truncate'
 import { Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
+const API_URL = import.meta.env.VITE_API_URL 
+
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return cabin
+  if (imagePath.startsWith('http')) return imagePath
+  
+  const fullUrl = `${API_URL}${imagePath}`
+  return fullUrl
+}
 
 export default function AccommodationList({ cottages }) {
   return(
@@ -9,10 +18,14 @@ export default function AccommodationList({ cottages }) {
       <div className='grid grid-cols-3 gap-6'>
         {
           cottages.map((cottage) => {
+            const imageUrl = cottage.Images && cottage.Images.length > 0 
+              ? getImageUrl(cottage.Images[0]) 
+              : cabin
+
             return(
               <Link to={`/reserve/${cottage._id}`} key={cottage._id} className='border border-gray-300 rounded-lg bg-white shadow-md hover:shadow-xl'>
                 <div className='relative'>
-                  <img src={cabin} alt='cabin' className=' h-64 w-full object-cover rounded-tl-md rounded-tr-md'/>
+                  <img src={imageUrl} alt='cabin' className=' h-64 w-full object-cover rounded-tl-md rounded-tr-md'/>
                   <span className='absolute top-3 right-3 bg-blue-500 text-white px-5 py-1 rounded-2xl'>{cottage.Type}</span>
                 </div>
                 <div className='p-5'>

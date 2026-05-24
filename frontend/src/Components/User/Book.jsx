@@ -7,6 +7,15 @@ import { useParams } from 'react-router-dom'
 import { reserveCottage } from '../../Service/reserveService'
 import toast from 'react-hot-toast'
 import BookingConfirm from '../User/BookingConfirm'
+const API_URL = import.meta.env.VITE_API_URL 
+
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return cabin
+  if (imagePath.startsWith('http')) return imagePath
+  
+  const fullUrl = `${API_URL}${imagePath}`
+  return fullUrl
+}
 
 export default function Book() {
   const [fullName, setFullName] = useState("")
@@ -140,9 +149,14 @@ export default function Book() {
   }
 
   
+  const imageUrl = cottage?.Images?.[0] 
+      ? getImageUrl(cottage.Images[0]) 
+      : cabin
+
   return(
     <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
       {loading || !cottage 
+      
       ? (
         <div className='col-span-2 text-center py-20'>
           <p className='text-xl text-gray-500'>Loading cottage details...</p>
@@ -151,7 +165,7 @@ export default function Book() {
       :
       <>
         <div className='border border-gray-300 rounded-2xl bg-white shadow-lg'>
-          <img src={cabin} alt='cabin' className=' h-100 w-full object-cover rounded-tl-xl rounded-tr-xl'/>
+          <img src={imageUrl} alt='cabin' className=' h-100 w-full object-cover rounded-tl-xl rounded-tr-xl'/>
           <div className='p-8'>
             <h1 className='text-4xl font-semibold'>{cottage.CottageName}</h1>
             <p className='text-gray-700 text-lg py-2 my-3'>{cottage.Descriptions}</p>
