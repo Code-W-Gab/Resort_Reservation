@@ -34,7 +34,7 @@ const ReserveControllers = {
     try {
       const reserve = await ReserveSchema.findByIdAndUpdate(
         req.params.id,
-        { Status: "Confirm" },
+        req.body,
         { returnDocument: 'after', runValidators: true }
       )
 

@@ -42,7 +42,7 @@ const ReserveSchema = new mongoose.Schema({
   },
   Status: {
     type: String,
-    enum: ["Confirm", "Pending"],
+    enum: ["Confirmed", "Pending", "Cancelled"],
     default: "Pending"
   }, 
 }, { timestamps: true });

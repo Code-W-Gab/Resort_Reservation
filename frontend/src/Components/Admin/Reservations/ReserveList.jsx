@@ -1,18 +1,29 @@
 import { CircleCheckBig, CircleX, Trash2 } from 'lucide-react'
 import { formatDate } from '../../../Utils/formatDate';
 import { useState } from 'react';
-import { updateReserveCottage } from '../../../Service/reserveService';
+import { cancelReservation, confirmReservation } from '../../../Service/reserveService';
 import toast from 'react-hot-toast';
 import ConfirmedModal from './ConfirmedModal';
+import CancelModal from './CancelModal';
 
 export default function ReserveList({ reserve, fetchReserve }) {
   const [selectedId, setSelectedId] = useState(null);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
 
-  function handleUpdateStatus() {
-    updateReserveCottage(selectedId)
+  function handleConfirmStatus() {
+    confirmReservation(selectedId)
       .then(res => {
         setIsConfirmModalOpen(false)
+        fetchReserve()
+        toast.success("Reservation Updated")
+      }).catch(err => console.log(err))
+  }
+
+  function handleCancelStatus() {
+    cancelReservation(selectedId)
+      .then(res => {
+        setIsCancelModalOpen(false)
         fetchReserve()
         toast.success("Reservation Updated")
       }).catch(err => console.log(err))
@@ -62,25 +73,43 @@ export default function ReserveList({ reserve, fetchReserve }) {
               <p>₱{r.Total}</p>
             </div>
             <div className="pr-5 break-all">
-              {r.Status === "Confirm"
+              {r.Status === "Confirmed"
                 ? <p className="bg-green-200 text-green-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
-                : <p className="bg-orange-200 text-orange-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
+                : r.Status === "Pending" 
+                ? <p className="bg-orange-200 text-orange-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
+                : <p className="bg-red-200 text-red-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
               }
             </div>
             <div>
-              {r.Status === "Confirm"
+              {r.Status === "Confirmed"
                 ? <div className="flex items-center gap-4 pr-5 break-all">
-                    <button><CircleX size={25} className='text-red-600'/></button>
-                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                    <button onClick={() => {
+                      setIsCancelModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
+                      <CircleX size={25} className='text-red-600'/>
+                    </button>
+                    <button>
+                      <Trash2 size={25} className='text-gray-500'/>
+                    </button>
                   </div>
-                : <div className="flex items-center gap-4 pr-5 break-all">
+                : r.Status === "Pending"
+                ? <div className="flex items-center gap-4 pr-5 break-all">
                     <button onClick={() => {
                       setIsConfirmModalOpen(true)
                       setSelectedId(r._id)
                     }}>
                       <CircleCheckBig size={25} className='text-green-600'/>
                     </button>
-                    <button><CircleX size={25} className='text-red-600'/></button>
+                    <button onClick={() => {
+                      setIsCancelModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
+                      <CircleX size={25} className='text-red-600'/>
+                    </button>
+                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                  </div>
+                : <div>
                     <button><Trash2 size={25} className='text-gray-500'/></button>
                   </div>
               }
@@ -92,7 +121,15 @@ export default function ReserveList({ reserve, fetchReserve }) {
       {isConfirmModalOpen && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <ConfirmedModal onClose={() => setIsConfirmModalOpen(false)} onConfirm={() => handleUpdateStatus()}/>
+            <ConfirmedModal onClose={() => setIsConfirmModalOpen(false)} onConfirm={() => handleConfirmStatus()}/>
+          </div>
+        </div>
+      )}
+
+      {isCancelModalOpen && (
+        <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
+          <div className="z-50">
+            <CancelModal onClose={() => setIsCancelModalOpen(false)} onConfirm={() => handleCancelStatus()}/>
           </div>
         </div>
       )}

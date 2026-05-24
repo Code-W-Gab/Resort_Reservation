@@ -1,8 +1,11 @@
 export default function Status({ count, reserve }) {
-  const pendingCount = reserve.filter(r => r.Status === "Pending").length
-  const confirmedCount = reserve.filter(r => r.Status === "Confirm").length
-  const totalReservationCount = count
-  const revenueByMonth = reserve.reduce((acc, r) => {
+  const pendingCount = reserve?.filter(r => r.Status === "Pending").length || 0
+  const confirmedCount = reserve?.filter(r => r.Status === "Confirmed").length || 0
+  const totalReservationCount = count || 0
+  
+  const revenueByMonth = reserve
+  ?.filter(r => r.Status !== "Cancelled")
+  ?.reduce((acc, r) => {
     const date = new Date(r.createdAt)
     const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
     
@@ -12,7 +15,7 @@ export default function Status({ count, reserve }) {
     acc[monthKey] += r.Total
     
     return acc
-  }, {})
+  }, {}) || {}
 
   const currentMonthRevenue = revenueByMonth[
     `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`
