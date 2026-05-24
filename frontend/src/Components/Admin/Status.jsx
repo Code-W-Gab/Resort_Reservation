@@ -1,4 +1,5 @@
 export default function Status() {
+  
   const status = [
     {"name": "Total Reservation", "count": 3, "color": "text-black"},
     {"name": "Confirmed", "count": 3, "color": "text-green-500"},

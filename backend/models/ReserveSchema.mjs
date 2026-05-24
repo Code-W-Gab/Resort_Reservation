@@ -39,7 +39,12 @@ const ReserveSchema = new mongoose.Schema({
   Total: {
     type: Number,
     required: true
-  }
+  },
+  Status: {
+    type: String,
+    enum: ["Confirm", "Pending"],
+    default: "Pending"
+  }, 
 }, { timestamps: true });
 
 export default mongoose.model('Reserve', ReserveSchema)
