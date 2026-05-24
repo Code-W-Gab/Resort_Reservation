@@ -1,7 +1,23 @@
 import { CircleCheckBig, CircleX, Trash2 } from 'lucide-react'
 import { formatDate } from '../../../Utils/formatDate';
+import { useState } from 'react';
+import { updateReserveCottage } from '../../../Service/reserveService';
+import toast from 'react-hot-toast';
+import ConfirmedModal from './ConfirmedModal';
 
-export default function ReserveList({ reserve }) {
+export default function ReserveList({ reserve, fetchReserve }) {
+  const [selectedId, setSelectedId] = useState(null);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
+
+  function handleUpdateStatus() {
+    updateReserveCottage(selectedId)
+      .then(res => {
+        setIsConfirmModalOpen(false)
+        fetchReserve()
+        toast.success("Reservation Updated")
+      }).catch(err => console.log(err))
+  }
+
   return(
     <main className="px-20">
       <h1 className="text-2xl font-semibold">Manage Reservations</h1>
@@ -51,14 +67,35 @@ export default function ReserveList({ reserve }) {
                 : <p className="bg-orange-200 text-orange-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
               }
             </div>
-            <div className="flex items-center gap-4 pr-5 break-all">
-              <CircleCheckBig size={22} className='text-green-600'/>
-              <CircleX size={22} className='text-red-600'/>
-              <Trash2 size={22} className='text-gray-500'/>
+            <div>
+              {r.Status === "Confirm"
+                ? <div className="flex items-center gap-4 pr-5 break-all">
+                    <button><CircleX size={25} className='text-red-600'/></button>
+                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                  </div>
+                : <div className="flex items-center gap-4 pr-5 break-all">
+                    <button onClick={() => {
+                      setIsConfirmModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
+                      <CircleCheckBig size={25} className='text-green-600'/>
+                    </button>
+                    <button><CircleX size={25} className='text-red-600'/></button>
+                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                  </div>
+              }
             </div>
           </div>
         )
       })}
+
+      {isConfirmModalOpen && (
+        <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
+          <div className="z-50">
+            <ConfirmedModal onClose={() => setIsConfirmModalOpen(false)} onConfirm={() => handleUpdateStatus()}/>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

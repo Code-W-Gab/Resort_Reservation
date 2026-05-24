@@ -29,6 +29,31 @@ const ReserveControllers = {
         message: error.message
       })
     }
+  },
+  async updateReserve(req, res){
+    try {
+      const reserve = await ReserveSchema.findByIdAndUpdate(
+        req.params.id,
+        { Status: "Confirm" },
+        { returnDocument: 'after', runValidators: true }
+      )
+
+      if (!reserve) return res.status(404).json({
+        success: false,
+        message: "Reservation not found"
+      })
+
+      res.status(200).json({
+        success: true,
+        message: "Reservation confirmed",
+        data: reserve
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message
+      })
+    }
   }
 }
 

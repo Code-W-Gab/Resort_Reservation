@@ -26,7 +26,7 @@ export default function ReservationPage() {
       <Header/>
       <div className="bg-gray-100 min-h-screen">
         <Status count={count} reserve={reserve}/>
-        <ReserveList  reserve={reserve}/>
+        <ReserveList  reserve={reserve} fetchReserve={fetchReserve}/>
       </div>
     </main>
   )
