@@ -78,7 +78,7 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
 
   const handleUpdateCottage = () => {
     setIsLoading(true)
-    UpdateCottage(id, cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities)
+    UpdateCottage(id, cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities, images)
       .then(res => {
         console.log("Update response:", res)
         toast.success("Updated Successfully!")

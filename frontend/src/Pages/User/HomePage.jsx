@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import AccommodationList from "../../Components/User/AccommodationList";
 import Accommodations from "../../Components/User/Accommodations";
 import Explore from "../../Components/User/Explore";
@@ -21,13 +21,21 @@ export default function HomePage() {
     fetchCottage()
   }, [])
 
+  const accommodationsRef = useRef(null)
+
+  const scrollToAccommodations = () => {
+    accommodationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
 
   return(
     <main>
       <Header/>
-      <Explore/>
+      <Explore onExploreClick={scrollToAccommodations} />
       <Info/>
-      <Accommodations/>
+      <div ref={accommodationsRef}>
+        <Accommodations />
+      </div>
       <AccommodationList cottages={cottages}/>
     </main>
   )

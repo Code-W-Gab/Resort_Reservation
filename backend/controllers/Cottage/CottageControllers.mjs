@@ -4,7 +4,19 @@ const CottageController = {
   async addCottage (req, res, next) {
     try {
       const { CottageName, Type, Descriptions, Capacity, DayTourPrice, OvernightPrice, Amenities } = req.body
-      const cottage = await CottageSchema.create({ CottageName, Type, Descriptions, Capacity, DayTourPrice, OvernightPrice, Amenities })
+      // Process uploaded files
+      const images = req.files ? req.files.map(file => `/${file.filename}`) : []
+
+      const cottage = await CottageSchema.create({ 
+        CottageName, 
+        Type, 
+        Descriptions, 
+        Capacity, 
+        DayTourPrice, 
+        OvernightPrice, 
+        Amenities,
+        Images: images
+      })
       res.status(201).json(cottage)
     } catch (error) {
       next(error)
@@ -43,10 +55,17 @@ const CottageController = {
 
   async updateCottage (req, res, next) {
     try {
+      const images = req.files ? req.files.map(file => `/${file.filename}`) : []
+      
+      const updateData = { ...req.body }
+      if (images.length > 0) {
+        updateData.Images = images
+      }
+      
       const updateCottage = await CottageSchema.findByIdAndUpdate(
         req.params.id,
-        req.body,
-        { new: true, runValidators: true }
+        updateData,
+        { returnDocument: 'after', runValidators: true }
       )
       if (!updateCottage) return res.status(404).json({ message: "Cottage not found!" })
       res.status(200).json(updateCottage)

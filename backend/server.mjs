@@ -13,10 +13,13 @@ app.use(cors())
 // MongoDb
 connectDB()
 
+app.use(express.static('uploads')) // Serve uploads as static files
+
 // Routes
 // Admin Cottage Routes
 app.use('/cottage', CottageRoutes) 
 app.use('/reserve', ReserveRoutes)
+
 
 // Global Error Handler
 app.use((err, req, res, next) => {

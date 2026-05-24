@@ -8,6 +8,15 @@ import { DeleteCottage } from '../../../Service/cottageService'
 import toast from 'react-hot-toast'
 import UpdateCottageModal from './UpdateCottageModel'
 
+const API_URL = import.meta.env.VITE_API_URL 
+
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return cabin
+  if (imagePath.startsWith('http')) return imagePath
+  
+  const fullUrl = `${API_URL}${imagePath}`
+  return fullUrl
+}
 export default function CottageList({ cottages, fetchCottage }) {
   const [isDeleteCottageModalOpen, setIsDeleteCottageModalOpen] = useState(false)
   const [isUpdateCottageModalOpen, setIsUpdateCottageModalOpen] = useState(false)
@@ -30,10 +39,18 @@ export default function CottageList({ cottages, fetchCottage }) {
       </div>
       <div className='grid grid-cols-3 gap-6'>
         {cottages.map((cottage) => {
+          const imageUrl = cottage.Images && cottage.Images.length > 0 
+            ? getImageUrl(cottage.Images[0]) 
+            : cabin
+          
           return(
-            <div key={cottage._id} className='border border-gray-300 rounded-lg bg-white hover:shadow-xl'>
+            <div key={cottage._id} className='border border-gray-300 rounded-lg bg-white shadow-lg hover:shadow-xl'>
               <div>
-                <img src={cabin} alt='cabin' className='h-50 w-full object-cover rounded-tl-md rounded-tr-md'/>
+                <img 
+                  src={imageUrl}
+                  alt={cottage.CottageName}
+                  className='h-70 w-full object-cover rounded-tl-md rounded-tr-md'
+                />
               </div>
               <div className='p-4'>
                 <h1 className='text-xl font-semibold'>{cottage.CottageName}</h1>

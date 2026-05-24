@@ -63,7 +63,7 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
       toast.error("Contents cannot be empty.")
       return
     }
-    AddCottage(cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities)
+    AddCottage(cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities, images)
       .then(res => {
         toast.success("Added Successfully!")
         setCottageName("")
