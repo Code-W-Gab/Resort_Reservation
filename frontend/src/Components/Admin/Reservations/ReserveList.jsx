@@ -1,4 +1,5 @@
 import { CircleCheckBig, CircleX, Trash2 } from 'lucide-react'
+import { formatDate } from '../../../Utils/formatDate';
 
 export default function ReserveList({ reserve }) {
   return(
@@ -27,8 +28,8 @@ export default function ReserveList({ reserve }) {
             </div>
             <div className="pr-5 break-all">
               {r.DayTourDate === null 
-                ? <p>Apr 20 - Apr 22, 2026</p>
-                : <p>Apr 20</p>
+                ? <p>{`${formatDate(r.CheckInDate)} - ${formatDate(r.CheckOutDate)}`}</p>
+                : <p>{formatDate(r.DayTourDate)}</p>
               }
             </div>
             <div className="pr-5 break-all">
