@@ -54,6 +54,26 @@ const ReserveControllers = {
         message: error.message
       })
     }
+  },
+  async deleteReserve(req, res){
+    try {
+      const reserve = await ReserveSchema.findByIdAndDelete(req.params.id)
+
+      if (!reserve) return res.status(404).json({
+        success: false,
+        message: "Reservation not found"
+      })
+
+      res.status(200).json({
+        success: true,
+        message: "Reservation deleted"
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message
+      })
+    }
   }
 }
 

@@ -1,15 +1,15 @@
 import { CircleCheckBig, CircleX, Trash2 } from 'lucide-react'
 import { formatDate } from '../../../Utils/formatDate';
 import { useState } from 'react';
-import { cancelReservation, confirmReservation } from '../../../Service/reserveService';
+import { cancelReservation, confirmReservation, deleteReservation } from '../../../Service/reserveService';
 import toast from 'react-hot-toast';
-import ConfirmedModal from './ConfirmedModal';
-import CancelModal from './CancelModal';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function ReserveList({ reserve, fetchReserve }) {
   const [selectedId, setSelectedId] = useState(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   function handleConfirmStatus() {
     confirmReservation(selectedId)
@@ -29,6 +29,15 @@ export default function ReserveList({ reserve, fetchReserve }) {
       }).catch(err => console.log(err))
   }
 
+  function handleDeleteReservation() {
+    deleteReservation(selectedId)
+      .then(res => {
+        setIsDeleteModalOpen(false)
+        fetchReserve()
+        toast.success("Reservation Updated")
+      }).catch(err => console.log(err))
+  }
+
   return(
     <main className="px-20">
       <h1 className="text-2xl font-semibold">Manage Reservations</h1>
@@ -43,12 +52,14 @@ export default function ReserveList({ reserve, fetchReserve }) {
         <p>ACTIONS</p>
       </div>
       
-      {reserve.map((r) => {
+      {reserve.length === 0
+      ? <div className='py-5 px-2 text-xl'>No reservation</div>
+      : reserve.map((r) => {
         return(
           <div key={r._id} className="grid grid-cols-[1.5fr_repeat(3,1fr)_repeat(4,120px)] items-center p-3 border border-t-0 border-gray-300">
             <div className="pr-5 break-all">
               <p>{r.FullName}</p>
-              <p>{r.Email}</p>
+              <p className='text-gray-500'>{r.Email}</p>
             </div>
             <div className="pr-5 break-all">
               <p>{r.CottageName}</p>
@@ -89,7 +100,10 @@ export default function ReserveList({ reserve, fetchReserve }) {
                     }}>
                       <CircleX size={25} className='text-red-600'/>
                     </button>
-                    <button>
+                    <button onClick={() => {
+                      setIsDeleteModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
                       <Trash2 size={25} className='text-gray-500'/>
                     </button>
                   </div>
@@ -107,10 +121,20 @@ export default function ReserveList({ reserve, fetchReserve }) {
                     }}>
                       <CircleX size={25} className='text-red-600'/>
                     </button>
-                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                    <button onClick={() => {
+                      setIsDeleteModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
+                      <Trash2 size={25} className='text-gray-500'/>
+                    </button>
                   </div>
                 : <div>
-                    <button><Trash2 size={25} className='text-gray-500'/></button>
+                    <button onClick={() => {
+                      setIsDeleteModalOpen(true)
+                      setSelectedId(r._id)
+                    }}>
+                      <Trash2 size={25} className='text-gray-500'/>
+                    </button>
                   </div>
               }
             </div>
@@ -121,7 +145,13 @@ export default function ReserveList({ reserve, fetchReserve }) {
       {isConfirmModalOpen && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <ConfirmedModal onClose={() => setIsConfirmModalOpen(false)} onConfirm={() => handleConfirmStatus()}/>
+            <ConfirmationModal 
+              onClose={() => setIsConfirmModalOpen(false)} 
+              onConfirm={() => handleConfirmStatus()}
+              title={"Confirm Reservation"}
+              type={"confirm"}
+              bgColor={"bg-blue-500"}
+            />
           </div>
         </div>
       )}
@@ -129,7 +159,27 @@ export default function ReserveList({ reserve, fetchReserve }) {
       {isCancelModalOpen && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">
-            <CancelModal onClose={() => setIsCancelModalOpen(false)} onConfirm={() => handleCancelStatus()}/>
+            <ConfirmationModal 
+              onClose={() => setIsCancelModalOpen(false)} 
+              onConfirm={() => handleCancelStatus()}
+              title={"Cancel Reservation"}
+              type={"cancel"}
+              bgColor={"bg-red-500"}
+            />
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
+          <div className="z-50">
+            <ConfirmationModal 
+              onClose={() => setIsDeleteModalOpen(false)}
+              onConfirm={() => handleDeleteReservation()}
+              title={"Delete Reservation"}
+              type={"delete"}
+              bgColor={"bg-red-500"}
+            />
           </div>
         </div>
       )}
