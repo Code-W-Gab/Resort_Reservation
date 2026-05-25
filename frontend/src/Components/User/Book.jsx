@@ -4,7 +4,7 @@ import { Users, Minus, Plus } from 'lucide-react'
 import Calendar from './Calendar'
 import { GetCottageById } from '../../Service/cottageService'
 import { useParams } from 'react-router-dom'
-import { reserveCottage } from '../../Service/reserveService'
+import { reserveCottage, getReserveCottage } from '../../Service/reserveService'
 import toast from 'react-hot-toast'
 import BookingConfirm from '../User/BookingConfirm'
 const API_URL = import.meta.env.VITE_API_URL 
@@ -36,6 +36,7 @@ export default function Book() {
   const [confirmCheckIn, setConfirmCheckIn] = useState(null)
   const [confirmCheckOut, setConfirmCheckOut] = useState(null)
   const [confirmTotal, setConfirmTotal] = useState(0)
+  const [reservedDates, setReservedDates] = useState([])
 
   useEffect(() => {
     setCheckIn(null)
@@ -153,7 +154,37 @@ export default function Book() {
       ? getImageUrl(cottage.Images[0]) 
       : cabin
 
-  console.log(cottage)
+  useEffect(() => {
+    if (cottage?.CottageName) {
+      getReserveCottage()
+        .then((res) => {
+          // Filter reservations for this specific cottage and not cancelled
+          const cottageReservations = res.data.data.filter(
+            (reserve) => reserve.CottageName === cottage.CottageName && reserve.Status !== 'Cancelled'
+          )
+          
+          // Extract all reserved dates
+          const reserved = []
+          cottageReservations.forEach((reserve) => {
+            if (reserve.DayTourDate) {
+              // For day tours, add just that one date
+              reserved.push(new Date(reserve.DayTourDate))
+            } else if (reserve.CheckInDate && reserve.CheckOutDate) {
+              // For overnight stays, add all dates in the range
+              const checkIn = new Date(reserve.CheckInDate)
+              const checkOut = new Date(reserve.CheckOutDate)
+              
+              for (let d = new Date(checkIn); d <= checkOut; d.setDate(d.getDate() + 1)) {
+                reserved.push(new Date(d))
+              }
+            }
+          })
+          
+          setReservedDates(reserved)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [cottage?.CottageName])
 
   return(
     <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
@@ -240,7 +271,7 @@ export default function Book() {
               onDateSelect={handleDateSelect}
               checkIn={checkIn}
               checkOut={checkOut}
-              reservedDates={[]}
+              reservedDates={reservedDates}  // Change from [] to {reservedDates}
             />
           ) : (
             <div className='bg-gray-100 p-4 rounded-lg text-gray-500 text-center'>
