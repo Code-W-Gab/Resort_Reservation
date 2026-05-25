@@ -57,10 +57,10 @@ export default function Book() {
   const calculateTotal = () => {
     if (!checkIn) return 0
     if (cottageType === 'dayTour') {
-      return 100
+      return cottage?.DayTourPrice || 0  // Use dynamic day tour price
     } else if (cottageType === 'overnight') {
       const nights = calculateNights()
-      return nights > 0 ? nights * 300 : 0
+      return nights > 0 ? nights * (cottage?.OvernightPrice || 0) : 0  // Use dynamic overnight price
     }
     return 0
   }
