@@ -1,3 +1,4 @@
+import ReservationCalendar from "../../Components/Admin/Calendar/ReservationCalendar";
 import Header from "../../Components/Admin/Header";
 import Status from "../../Components/Admin/Status";
 import { getReserveCottage } from "../../Service/reserveService";
@@ -21,10 +22,11 @@ export default function CalendarPage() {
   }, [])
 
   return(
-    <main >
+    <main>
       <Header/>
       <div className="bg-gray-100 min-h-screen">
         <Status count={count} reserve={reserve}/>
+        <ReservationCalendar reserve={reserve} fetchReserve={fetchReserve}/>
       </div>
     </main>
   )
