@@ -7,6 +7,11 @@ const CottageController = {
       // Process uploaded files
       const images = req.files ? req.files.map(file => `/${file.filename}`) : []
 
+      // Parse amenities string into array
+      const amenitiesArray = typeof Amenities === 'string' 
+        ? Amenities.split(',').map(a => a.trim()).filter(a => a)
+        : Amenities
+
       const cottage = await CottageSchema.create({ 
         CottageName, 
         Type, 
@@ -14,7 +19,7 @@ const CottageController = {
         Capacity, 
         DayTourPrice, 
         OvernightPrice, 
-        Amenities,
+        Amenities: amenitiesArray,
         Images: images
       })
       res.status(201).json(cottage)
@@ -58,6 +63,12 @@ const CottageController = {
       const images = req.files ? req.files.map(file => `/${file.filename}`) : []
       
       const updateData = { ...req.body }
+      
+      // Parse amenities if it's a string
+      if (typeof updateData.Amenities === 'string') {
+        updateData.Amenities = updateData.Amenities.split(',').map(a => a.trim()).filter(a => a)
+      }
+      
       if (images.length > 0) {
         updateData.Images = images
       }
