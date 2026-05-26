@@ -5,6 +5,7 @@ import cors from 'cors'
 import connectDB from './config/db.mjs'
 import CottageRoutes from './routes/CottageRoutes.mjs'
 import ReserveRoutes from './routes/ReserveRoutes.mjs'
+import AuthRoutes from './routes/AuthRoutes.mjs'
 
 const app = express()
 app.use(express.json())
@@ -16,6 +17,8 @@ connectDB()
 app.use(express.static('uploads')) // Serve uploads as static files
 
 // Routes
+// Auth
+app.use('/auth', AuthRoutes)
 // Admin Cottage Routes
 app.use('/cottage', CottageRoutes) 
 app.use('/reserve', ReserveRoutes)

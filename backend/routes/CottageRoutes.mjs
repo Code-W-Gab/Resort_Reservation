@@ -1,6 +1,6 @@
 import express from 'express'
 import upload from '../middleware/uploadMiddleware.mjs'
-import CottageController from '../controllers/Cottage/CottageControllers.mjs'
+import CottageController from '../controllers/CottageControllers.mjs'
 
 const router = express.Router()
 

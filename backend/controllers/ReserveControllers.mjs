@@ -1,4 +1,4 @@
-import ReserveSchema from "../../models/ReserveSchema.mjs";
+import ReserveSchema from "../models/ReserveSchema.mjs";
 
 const ReserveControllers = {
   async reserve (req, res) {

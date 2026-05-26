@@ -1,5 +1,5 @@
 import express from 'express'
-import ReserveControllers from '../controllers/Cottage/ReserveControllers.mjs'
+import ReserveControllers from '../controllers/ReserveControllers.mjs'
 
 const router = express.Router()
 

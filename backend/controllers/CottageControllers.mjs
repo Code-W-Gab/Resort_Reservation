@@ -1,4 +1,4 @@
-import CottageSchema from '../../models/CottageSchema.mjs'
+import CottageSchema from '../models/CottageSchema.mjs'
 
 const CottageController = {
   async addCottage (req, res, next) {

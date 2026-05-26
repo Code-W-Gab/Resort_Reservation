@@ -14,7 +14,7 @@ const getImageUrl = (imagePath) => {
 
 export default function AccommodationList({ cottages }) {
   return(
-    <main className='px-30 py-10'>
+    <main className='px-50 py-10'>
       <div className='grid grid-cols-3 gap-6'>
         {
           cottages.map((cottage) => {
@@ -24,8 +24,8 @@ export default function AccommodationList({ cottages }) {
 
             return(
               <Link to={`/reserve/${cottage._id}`} key={cottage._id} className='border border-gray-300 rounded-lg bg-white shadow-md hover:shadow-xl'>
-                <div className='relative'>
-                  <img src={imageUrl} alt='cabin' className=' h-64 w-full object-cover rounded-tl-md rounded-tr-md'/>
+                <div className='relative overflow-hidden rounded-tl-md rounded-tr-md'>
+                  <img src={imageUrl} alt='cabin' className='h-64 w-full object-cover transition-transform duration-300 hover:scale-105'/>
                   <span className='absolute top-3 right-3 bg-blue-500 text-white px-5 py-1 rounded-2xl'>{cottage.Type}</span>
                 </div>
                 <div className='p-5'>
