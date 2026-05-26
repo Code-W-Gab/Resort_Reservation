@@ -7,22 +7,22 @@ export default function ReservationDetail({ reservation, onClose }) {
       <h2 className="text-xl font-semibold mb-5">Reservation Details</h2>
 
       <div className="space-y-3 text-sm">
-        <div>
-          <p className="text-gray-600 font-semibold">Guest Name</p>
+        <div className='flex items-center gap-2'>
+          <p className="text-gray-600 font-semibold">Guest Name:</p>
           <p>{reservation.FullName}</p>
         </div>
 
-        <div>
-          <p className="text-gray-600 font-semibold">Email</p>
+        <div className='flex items-center gap-2'>
+          <p className="text-gray-600 font-semibold">Email:</p>
           <p className="text-blue-600">{reservation.Email}</p>
         </div>
 
-        <div>
-          <p className="text-gray-600 font-semibold">Cottage</p>
+        <div className='flex items-center gap-2'>
+          <p className="text-gray-600 font-semibold">Cottage:</p>
           <p>{reservation.CottageName}</p>
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-2'>
           <p className="text-gray-600 font-semibold">
             {reservation.DayTourDate ? 'Day Tour Date:' : 'Dates:'}
           </p>
@@ -33,17 +33,17 @@ export default function ReservationDetail({ reservation, onClose }) {
           </p>
         </div>
 
-        <div className='flex items-center gap-3'>
-          <p className="text-gray-600 font-semibold">Type</p>
+        <div className='flex items-center gap-2'>
+          <p className="text-gray-600 font-semibold">Type:</p>
           <p>{reservation.DayTourDate ? 'Day Tour' : 'Overnight'}</p>
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-2'>
           <p className="text-gray-600 font-semibold">Guests:</p>
           <p>{reservation.Capacity}</p>
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-2'>
           <p className="text-gray-600 font-semibold">Total:</p>
           <p className="text-lg font-bold">₱{reservation.Total}</p>
         </div>

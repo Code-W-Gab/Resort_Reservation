@@ -92,7 +92,7 @@ export default function Book() {
 
   function handleConfirmBooking() {
     // Validation
-    if (!fullName.trim() || !email.trim() || !phone.trim()) {
+    if (!fullName.trim() || !email.trim() || !phone.trim() || capacity === 0) {
       toast.error("Please fill in all required fields")
       return
     }

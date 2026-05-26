@@ -31,10 +31,18 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
     return reservedDates.some((reserved) => isSameDay(date, new Date(reserved)))
   }
 
+  const isPastDate = (date) => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)  // Reset time to midnight for accurate comparison
+    const dateToCheck = new Date(date)
+    dateToCheck.setHours(0, 0, 0, 0)
+    return dateToCheck < today
+  }
+
   const handleDateClick = (day) => {
     const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
 
-    if (isReservedDate(selectedDate)) return
+    if (isPastDate(selectedDate) || isReservedDate(selectedDate)) return
 
     if (bookingType === 'dayTour') {
       onDateSelect(selectedDate, selectedDate)
@@ -54,7 +62,13 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
   }
 
   const previousMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1))
+    const today = new Date()
+    const currentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth())
+    const todayMonth = new Date(today.getFullYear(), today.getMonth())
+    
+    if (currentMonth > todayMonth) {
+      setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1))
+    }
   }
 
   const nextMonth = () => {
@@ -89,8 +103,10 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
 
       let dayClass = 'h-10 rounded text-sm font-medium cursor-pointer flex items-center justify-center border'
 
-      if (isReserved) {
-        dayClass += ' bg-gray-300 text-gray-500 cursor-not-allowed'
+      if (isPastDate(currentFullDate)) {
+        dayClass += ' bg-red-100 text-red-600 border-red-300 cursor-not-allowed'  // Past dates - light red
+      } else if (isReserved) {
+        dayClass += ' bg-gray-300 text-gray-700 border-gray-400 cursor-not-allowed'  // Reserved dates - orange
       } else if (isSelected) {
         dayClass += ' bg-blue-500 text-white border-blue-500'
       } else if (isInRange) {
@@ -106,7 +122,7 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
           key={day}
           onClick={() => handleDateClick(day)}
           className={dayClass}
-          disabled={isReserved}
+          disabled={isPastDate(currentFullDate) || isReserved}
         >
           {day}
         </button>
@@ -145,6 +161,10 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
         <div className='flex items-center gap-2'>
           <div className='size-3 bg-blue-100 rounded-sm'></div>
           <p className='text-xs'>Range</p>
+        </div>
+        <div className='flex items-center gap-2'>
+          <div className='size-3 bg-red-100 rounded-sm border border-red-300'></div>
+          <p className='text-xs'>Past Date</p>
         </div>
         <div className='flex items-center gap-2'>
           <div className='size-3 bg-gray-300 rounded-sm'></div>
