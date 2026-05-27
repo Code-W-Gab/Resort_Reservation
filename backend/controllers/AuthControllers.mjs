@@ -1,6 +1,7 @@
 import AuthSchema from "../models/AuthSchema.mjs";
 import { validationResult } from "express-validator";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 
 const AuthControllers = {
   async Register (req, res) {
@@ -56,6 +57,21 @@ const AuthControllers = {
         message: "Invalid Credentials"
       })
 
+      // JWT - creating token
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+      )
+
+      // store inside cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false, // true in production (HTTPS)
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
       res.status(200).json({
         success: true,
         message: "Login successful"
@@ -66,7 +82,30 @@ const AuthControllers = {
         message: error.message
       })
     }
-  }
+  },
+  async getProfile (req, res){
+    res.status(200).json({
+      message: "Protected profile data",
+      user: req.user,
+    });
+  },
+  async logout (req, res){
+    try {
+      res.cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0),
+      });
+
+      res.json({
+        message: "Logged out",
+      });
+    } catch (error) {
+      res.status(500).json({
+        success:false,
+        message: error.message
+      })
+    }
+  } 
 }
 
 export default AuthControllers
