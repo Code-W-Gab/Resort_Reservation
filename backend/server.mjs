@@ -10,7 +10,7 @@ import AuthRoutes from './routes/AuthRoutes.mjs'
 
 const app = express()
 app.use(express.json())
-app.use(cookieParser(process.env.COOKIE_SECRET))
+app.use(cookieParser())
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true

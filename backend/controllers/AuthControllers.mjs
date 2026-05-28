@@ -64,15 +64,15 @@ const AuthControllers = {
           role: user.Role
         },
         process.env.JWT_SECRET,
-        { expiresIn: '15m' }
+        { expiresIn: '7d' }
       )
 
       // store inside cookie
       res.cookie("token", token, {
         httpOnly: true,
         secure: false, // true in production (HTTPS)
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000
       });
 
       res.status(200).json({
@@ -94,9 +94,14 @@ const AuthControllers = {
   },
   async getMe (req, res){
     try {
+      const user = await AuthSchema.findById(req.user.id).select('-password')
       res.status(200).json({
-        message: "Login",
-        user: req.user
+        user: {
+          id: user._id,
+          name: user.FullName,
+          email: user.Email,
+          role: user.Role
+        }
       })
     } catch (error) {
       res.status(500).json({
@@ -109,6 +114,7 @@ const AuthControllers = {
     try {
       res.cookie("token", "", {
         httpOnly: true,
+        sameSite: "lax",
         expires: new Date(0),
       });
 
