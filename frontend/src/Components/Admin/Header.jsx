@@ -1,5 +1,6 @@
 import { Calendar } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import ProfileBtnMenu from '../../Layout/ProfileBtnMenu'
 
 export default function Header() {
   return(
@@ -12,6 +13,7 @@ export default function Header() {
         </Link>
         <Link to={'/reservation'} className="bg-blue-500 px-4 py-2 rounded-lg text-white text-md">Reservation</Link>
         <Link to={'/cottage'} className="bg-blue-500 px-4 py-2 rounded-lg text-white text-md">Cottages</Link>
+        <ProfileBtnMenu/>
       </div>
     </main>
   )
