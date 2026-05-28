@@ -59,9 +59,12 @@ const AuthControllers = {
 
       // JWT - creating token
       const token = jwt.sign(
-        { id: user._id },
+        { 
+          id: user._id,
+          role: user.Role
+        },
         process.env.JWT_SECRET,
-        { expiresIn: '1d' }
+        { expiresIn: '15m' }
       )
 
       // store inside cookie
@@ -74,7 +77,8 @@ const AuthControllers = {
 
       res.status(200).json({
         success: true,
-        message: "Login successful"
+        message: "Login successful",
+        role: user.Role
       })
     } catch (error) {
       res.status(500).json({
@@ -83,11 +87,18 @@ const AuthControllers = {
       })
     }
   },
-  async getProfile (req, res){
-    res.status(200).json({
-      message: "Protected profile data",
-      user: req.user,
-    });
+  async getMe (req, res){
+    try {
+      res.status(200).json({
+        message: "Login",
+        role: req.user.role
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message
+      })
+    }
   },
   async logout (req, res){
     try {
@@ -105,7 +116,19 @@ const AuthControllers = {
         message: error.message
       })
     }
-  } 
+  },
+  // async userPage (req, res){
+  //   res.status(200).json({
+  //     message: "welcome user",
+  //     role: req.user.role
+  //   })
+  // }, 
+  // async adminPage (req, res){
+  //   res.status(200).json({
+  //     message: "welcome admin",
+  //     role: req.user.role
+  //   })
+  // }
 }
 
 export default AuthControllers
