@@ -32,8 +32,17 @@ export default function Login() {
   }
 
   return(
-    <main className="flex items-center justify-center min-h-screen bg-red-200">
-      <div>
+    <main 
+      className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=800&fit=crop')`
+      }}
+    >
+      {/* Blue Semi-transparent Overlay */}
+      <div className="absolute inset-0 bg-blue-500 opacity-40"></div>
+      
+      {/* Login Form - with relative z-10 to appear above overlay */}
+      <div className="relative z-10">
         <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
           <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
           <p>Welcome back! Please login to continue</p>
@@ -60,12 +69,10 @@ export default function Login() {
             />
           </div>
           <div className="mt-3">
-            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full">Login</button>
+            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition">Login</button>
           </div>
         </div>
-        
       </div>
-
     </main>
   )
 }
