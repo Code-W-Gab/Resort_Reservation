@@ -78,7 +78,12 @@ const AuthControllers = {
       res.status(200).json({
         success: true,
         message: "Login successful",
-        role: user.Role
+        user: {
+          id: user._id,
+          name: user.FullName,
+          email: user.Email,
+          role: user.Role,
+        }
       })
     } catch (error) {
       res.status(500).json({
@@ -91,7 +96,7 @@ const AuthControllers = {
     try {
       res.status(200).json({
         message: "Login",
-        role: req.user.role
+        user: req.user
       })
     } catch (error) {
       res.status(500).json({

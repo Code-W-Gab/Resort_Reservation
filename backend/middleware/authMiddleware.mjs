@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import AuthSchema from '../models/AuthSchema.mjs';
 
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   try {
     const token = req.cookies.token;
 
@@ -13,7 +14,9 @@ const protect = (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    req.user = decoded;
+    const user = await AuthSchema.findById(decoded.id).select('-password')
+
+    req.user = user
 
     next();
   } catch (error) {

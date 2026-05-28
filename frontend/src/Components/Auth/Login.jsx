@@ -2,8 +2,10 @@ import { useState } from "react"
 import { login } from "../../Service/authService"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
+import { useAuth } from "../../Context/AuthContext"
 
 export default function Login() {
+  const { setUser } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
@@ -11,28 +13,28 @@ export default function Login() {
   function handleLogin() {
     login(email, password)
       .then(res => {
-        try {
-          if (res.data.role === "admin"){
-            navigate('/calendar')
-            toast.success("Login successfully")
-          } else if (res.data.role === 'user'){
-            navigate('/home')
-            toast.success("Login successfully")
-          } else {
-            navigate('/')
-            toast.error("Invalid Credentials")
-          }
-        } catch (error) {
-          console.log(error)
-          toast.error("Login Failed")
+        setUser(res.data.user)
+        if (res.data.user.role === "admin"){
+          navigate('/calendar')
+          toast.success("Login successfully")
+        } else if (res.data.user.role === 'user'){
+          navigate('/home')
+          toast.success("Login successfully")
+        } else {
+          navigate('/')
+          toast.error("Invalid Credentials")
         }
+      })
+      .catch (error => {
+        console.log(error)
+        toast.error("Login Failed")
       })
   }
 
   return(
     <main className="flex items-center justify-center min-h-screen bg-red-200">
       <div>
-        <div className="text-center text-white bg-blue-600 w-120 p-7 rounded-tl-xl rounded-tr-xl">
+        <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
           <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
           <p>Welcome back! Please login to continue</p>
         </div>

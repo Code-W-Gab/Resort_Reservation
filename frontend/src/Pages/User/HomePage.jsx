@@ -6,7 +6,7 @@ import Info from "../../Components/User/Info";
 import Header from "../../Layout/Header";
 import { GetCottage } from "../../Service/cottageService";
 
-export default function HomePage() {
+export default function HomePage({ setUser }) {
   const [cottages, setCottages] = useState([])
 
   const fetchCottage = () => {
@@ -30,7 +30,7 @@ export default function HomePage() {
 
   return(
     <main>
-      <Header/>
+      <Header setUser={setUser}/>
       <Explore onExploreClick={scrollToAccommodations} />
       <Info/>
       <div ref={accommodationsRef}>

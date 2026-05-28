@@ -5,27 +5,9 @@ import ReservationPage from "./Pages/Admin/ReservationPage"
 import HomePage from "./Pages/User/HomePage"
 import ReservePage from "./Pages/User/ReservePage"
 import LoginPage from "./Pages/Auth/LoginPage"
-import { useState } from "react"
-import { me } from "./Service/authService"
-import { useEffect } from "react"
-import UserProtectedRoute from "./Layout/UserProtectedRoute"
-import AdminProtectedRoute from "./Layout/AdminProtectedRoute"
+import ProtectedRoute from "./Layout/ProtectedRoute"
 
 export default function App() {
-  const [user, setUser] = useState(null)
-
-  function fetchUser() {
-    me()
-      .then(res => {
-        setUser(res.data)
-      }).catch(err => console.log(err))
-  }
-
-  useEffect(() => {
-    fetchUser()
-  }, [])
-
-  console.log(user)
 
   // function handleLogout() {
   //   logout()
@@ -41,31 +23,31 @@ export default function App() {
         {/* User Page */}
         <Route path="/" element={<Navigate to={'/auth/login'}/>}/>
         <Route path="/home" element={
-          <UserProtectedRoute user={user}>
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
             <HomePage/>
-          </UserProtectedRoute>
+          </ProtectedRoute>
         }/>
         <Route path="/reserve/:id" element={
-          <UserProtectedRoute user={user}>
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
             <ReservePage/>
-          </UserProtectedRoute>
+          </ProtectedRoute>
         }/>
 
         {/* Admin Page */}
         <Route path="/calendar" element={
-          <AdminProtectedRoute user={user}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <CalendarPage/>
-          </AdminProtectedRoute>
+          </ProtectedRoute>
         }/>
         <Route path="/cottage" element={
-          <AdminProtectedRoute user={user}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <CottagePage/>
-          </AdminProtectedRoute>
+          </ProtectedRoute>
         }/>
         <Route path="/reservation" element={
-          <AdminProtectedRoute user={user}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <ReservationPage/>
-          </AdminProtectedRoute>
+          </ProtectedRoute>
         }/>
         {/* Auth Page */}
         <Route path="/auth/login" element={<LoginPage/>}/>
