@@ -7,10 +7,15 @@ import connectDB from './config/db.mjs'
 import CottageRoutes from './routes/CottageRoutes.mjs'
 import ReserveRoutes from './routes/ReserveRoutes.mjs'
 import AuthRoutes from './routes/AuthRoutes.mjs'
+import passport from 'passport'
+import setupPassport from './config/passport.mjs'
+
+setupPassport() // Set up Passport strategies
 
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
+app.use(passport.initialize()) // Initialize Passport middleware
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true

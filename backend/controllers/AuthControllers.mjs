@@ -128,18 +128,33 @@ const AuthControllers = {
       })
     }
   },
-  // async userPage (req, res){
-  //   res.status(200).json({
-  //     message: "welcome user",
-  //     role: req.user.role
-  //   })
-  // }, 
-  // async adminPage (req, res){
-  //   res.status(200).json({
-  //     message: "welcome admin",
-  //     role: req.user.role
-  //   })
-  // }
+  async googleLogin (req, res) {
+    // Successful authentication, generate JWT and send to client 
+    const user = req.user;
+    const token = jwt.sign(
+      { 
+        id: user._id,
+        role: user.Role,
+        name: user.FullName
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+    
+    // Store token in cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+
+    if (user.Role === 'admin') {
+      res.redirect('http://localhost:5173/cottage');
+    } else {
+      res.redirect('http://localhost:5173/home');
+    }
+  }
 }
 
 export default AuthControllers

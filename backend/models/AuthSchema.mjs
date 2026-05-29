@@ -3,16 +3,22 @@ import mongoose, { model } from "mongoose";
 
 const AuthSchema = new mongoose.Schema({
   FullName: {
-    type: String,
-    required: true
+    type: String
   },
   Email: {
     type: String,
-    required: true
+    unique: true
+  },
+  GoogleId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  Avatar: {
+    type: String
   },
   Password: {
-    type: String,
-    required: true
+    type: String
   },
   Role: {
     type: String,

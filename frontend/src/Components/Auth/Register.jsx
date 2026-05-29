@@ -24,6 +24,11 @@ export default function Register() {
       })
   }
 
+  function handleGoogleLogin() {
+    // Redirect to the backend route that initiates Google OAuth
+    window.location.href = "http://localhost:8080/auth/google"
+  }
+
   return(
     <main 
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
@@ -73,6 +78,15 @@ export default function Register() {
           </div>
           <div className="mt-3">
             <button onClick={handleRegister} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">Register</button>
+            <div className="flex items-center gap-4 my-4">
+              <div className="flex-1 border-b border-gray-300"></div>
+              <div className="text-gray-700 whitespace-nowrap">Or continue with</div>
+              <div className="flex-1 border-b border-gray-300"></div>
+            </div>
+            <button onClick={handleGoogleLogin} className=" flex items-center justify-center border border-gray-300 py-2.5 bg-white text-lg font-medium rounded-lg w-full mb-3">
+              <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" className="inline-block size-6 mr-2"/>
+              Login with Google
+            </button>
             {/* Register */}
             <p className="text-center text-gray-700">Already have an account? <Link to={'/auth/login'} className="font-semibold text-blue-500 cursor-pointer hover:underline">Sign in.</Link></p>
           </div>
