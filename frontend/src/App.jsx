@@ -6,6 +6,7 @@ import HomePage from "./Pages/User/HomePage"
 import ReservePage from "./Pages/User/ReservePage"
 import LoginPage from "./Pages/Auth/LoginPage"
 import ProtectedRoute from "./Layout/ProtectedRoute"
+import RegisterPage from "./Pages/Auth/RegisterPage"
 
 export default function App() {
 
@@ -51,6 +52,7 @@ export default function App() {
         }/>
         {/* Auth Page */}
         <Route path="/auth/login" element={<LoginPage/>}/>
+        <Route path="/auth/register" element={<RegisterPage/>}/>
       </Routes>
     </main>
   )

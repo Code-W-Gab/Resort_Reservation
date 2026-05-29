@@ -1,33 +1,26 @@
 import { useState } from "react"
-import { login } from "../../Service/authService"
 import { Link, useNavigate } from "react-router-dom"
+import { register } from "../../Service/authService"
 import toast from "react-hot-toast"
-import { useAuth } from "../../Context/AuthContext"
 
-export default function Login() {
-  const { setUser } = useAuth()
+export default function Register() {
+  const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  function handleLogin() {
-    login(email, password)
+  function handleRegister() {
+    register(fullName, email, password)
       .then(res => {
-        setUser(res.data.user)
-        if (res.data.user.role === "admin"){
-          navigate('/calendar')
-          toast.success("Login successfully")
-        } else if (res.data.user.role === 'user'){
-          navigate('/home')
-          toast.success("Login successfully")
-        } else {
-          navigate('/')
-          toast.error("Invalid Credentials")
-        }
+        setFullName("")
+        setEmail("")
+        setPassword("")
+        navigate('/auth/login')
+        toast.success("Register successfully, Please Login!")
       })
-      .catch (error => {
-        console.log(error)
-        toast.error("Login Failed")
+      .catch(err => {
+        console.log(err)
+        toast.error("Register Failed")
       })
   }
 
@@ -45,9 +38,19 @@ export default function Login() {
       <div className="relative z-10">
         <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
           <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
-          <p>Welcome back! Please login to continue</p>
+          <p>Create an account! Please register to continue</p>
         </div>
         <div className="p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl">
+          <div className="flex flex-col gap-1.5">
+            <label>Full Name</label>
+            <input
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              type="text" 
+              placeholder="Juan Dela Cruz" 
+            />
+          </div>
           <div className="flex flex-col gap-1.5">
             <label>Email Address</label>
             <input
@@ -69,9 +72,9 @@ export default function Login() {
             />
           </div>
           <div className="mt-3">
-            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">Login</button>
+            <button onClick={handleRegister} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">Register</button>
             {/* Register */}
-            <p className="text-center text-gray-700">Don't have an account? <Link to={'/auth/register'} className="font-semibold text-blue-500 cursor-pointer hover:underline">Register.</Link></p>
+            <p className="text-center text-gray-700">Already have an account? <Link to={'/auth/login'} className="font-semibold text-blue-500 cursor-pointer hover:underline">Sign in.</Link></p>
           </div>
         </div>
       </div>

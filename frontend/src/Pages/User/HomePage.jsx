@@ -5,6 +5,7 @@ import Explore from "../../Components/User/Explore";
 import Info from "../../Components/User/Info";
 import Header from "../../Layout/Header";
 import { GetCottage } from "../../Service/cottageService";
+import Footer from "../../Layout/Footer";
 
 export default function HomePage() {
   const [cottages, setCottages] = useState([])
@@ -37,6 +38,7 @@ export default function HomePage() {
         <Accommodations />
       </div>
       <AccommodationList cottages={cottages}/>
+      <Footer/>
     </main>
   )
 }
