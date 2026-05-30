@@ -24,7 +24,18 @@ const AuthSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: {
+    type: String
+  },
+  verificationCodeExpires: {
+    type: Date
   }
-})
+},{ timestamps: true}
+)
 
 export default mongoose.model('User', AuthSchema)

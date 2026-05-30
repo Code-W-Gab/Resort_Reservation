@@ -7,6 +7,7 @@ import ReservePage from "./Pages/User/ReservePage"
 import LoginPage from "./Pages/Auth/LoginPage"
 import ProtectedRoute from "./Layout/ProtectedRoute"
 import RegisterPage from "./Pages/Auth/RegisterPage"
+import VerifyOTPPage from "./Pages/Auth/VerifyOTPPage"
 
 export default function App() {
 
@@ -53,6 +54,7 @@ export default function App() {
         {/* Auth Page */}
         <Route path="/auth/login" element={<LoginPage/>}/>
         <Route path="/auth/register" element={<RegisterPage/>}/>
+        <Route path="/auth/verify-otp" element={<VerifyOTPPage/>}/>
       </Routes>
     </main>
   )

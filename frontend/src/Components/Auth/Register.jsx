@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { register } from "../../Service/authService"
 import toast from "react-hot-toast"
 
@@ -7,25 +7,46 @@ export default function Register() {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   function handleRegister() {
+    if (!fullName || !email || !password) {
+      toast.error("Please fill all fields")
+      return
+    }
+  
+    setLoading(true)
     register(fullName, email, password)
       .then(res => {
-        setFullName("")
-        setEmail("")
-        setPassword("")
-        navigate('/auth/login')
-        toast.success("Register successfully, Please Login!")
+        const message = res.data?.message
+        
+        // Check if this is a re-registration (unverified user trying to register again)
+        if (message?.includes('New OTP')) {
+          toast.success("New OTP sent! Check your email.")
+        } else {
+          // New user registration
+          toast.success("Registration successful! Check your email for OTP code")
+        }
+        
+        // Navigate to OTP verification page (works for both cases)
+        navigate('/auth/verify-otp', { state: { email } })
       })
       .catch(err => {
         console.log(err)
-        toast.error("Register Failed")
+        const errorMessage = err.response?.data?.message
+        
+        // If user exists and is verified, don't navigate to verify page
+        if (errorMessage?.includes('User already exist')) {
+          toast.error("This email is already registered and verified. Please login instead.")
+        } else {
+          toast.error(errorMessage || "Registration Failed")
+        }
       })
+      .finally(() => setLoading(false))
   }
 
   function handleGoogleLogin() {
-    // Redirect to the backend route that initiates Google OAuth
     window.location.href = "http://localhost:8080/auth/google"
   }
 
@@ -36,10 +57,8 @@ export default function Register() {
         backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=800&fit=crop')`
       }}
     >
-      {/* Blue Semi-transparent Overlay */}
       <div className="absolute inset-0 bg-blue-500 opacity-40"></div>
       
-      {/* Login Form - with relative z-10 to appear above overlay */}
       <div className="relative z-10">
         <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
           <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
@@ -77,18 +96,23 @@ export default function Register() {
             />
           </div>
           <div className="mt-3">
-            <button onClick={handleRegister} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">Register</button>
+            <button 
+              onClick={handleRegister} 
+              disabled={loading}
+              className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3 disabled:opacity-50"
+            >
+              {loading ? "Registering..." : "Register"}
+            </button>
             <div className="flex items-center gap-4 my-4">
               <div className="flex-1 border-b border-gray-300"></div>
               <div className="text-gray-700 whitespace-nowrap">Or continue with</div>
               <div className="flex-1 border-b border-gray-300"></div>
             </div>
-            <button onClick={handleGoogleLogin} className=" flex items-center justify-center border border-gray-300 py-2.5 bg-white text-lg font-medium rounded-lg w-full mb-3">
+            <button onClick={handleGoogleLogin} className="flex items-center justify-center border border-gray-300 py-2.5 bg-white text-lg font-medium rounded-lg w-full mb-3">
               <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" className="inline-block size-6 mr-2"/>
               Login with Google
             </button>
-            {/* Register */}
-            <p className="text-center text-gray-700">Already have an account? <Link to={'/auth/login'} className="font-semibold text-blue-500 cursor-pointer hover:underline">Sign in.</Link></p>
+            <p className="text-center text-gray-700">Already have an account? <Link to="/auth/login" className="font-semibold text-blue-500 cursor-pointer hover:underline">Sign in.</Link></p>
           </div>
         </div>
       </div>
