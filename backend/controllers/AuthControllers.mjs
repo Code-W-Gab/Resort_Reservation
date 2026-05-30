@@ -39,7 +39,7 @@ const AuthControllers = {
 
       // Send OTP email
       await sendEmail(Email, "Your Verification Code", `Your OTP code is: ${otp}`)
-
+      
       res.status(201).json({
         success: true,
         data: user,
