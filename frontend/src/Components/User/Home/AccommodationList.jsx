@@ -1,5 +1,5 @@
 import cabin from '/cabin.jpg'
-import { truncateString } from '../../Utils/truncate'
+import { truncateString } from '../../../Utils/truncate'
 import { Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
 const API_URL = import.meta.env.VITE_API_URL 
@@ -14,7 +14,7 @@ const getImageUrl = (imagePath) => {
 
 export default function AccommodationList({ cottages }) {
   return(
-    <main className='px-50 py-10'>
+    <main className='pb-10'>
       <div className='grid grid-cols-3 gap-6'>
         {
           cottages.map((cottage) => {

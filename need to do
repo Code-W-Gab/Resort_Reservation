@@ -1,4 +1,4 @@
-redesign header for logout
 add about. contact etc.
 responsive design
 add ratelimiter to login and getME
+change loading state into skeleton loading

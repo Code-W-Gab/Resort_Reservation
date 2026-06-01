@@ -8,6 +8,8 @@ import LoginPage from "./Pages/Auth/LoginPage"
 import ProtectedRoute from "./Layout/ProtectedRoute"
 import RegisterPage from "./Pages/Auth/RegisterPage"
 import VerifyOTPPage from "./Pages/Auth/VerifyOTPPage"
+import AboutPage from "./Pages/User/AboutPage"
+import CottagesPage from "./Pages/User/CottagesPage"
 
 export default function App() {
 
@@ -32,6 +34,16 @@ export default function App() {
         <Route path="/reserve/:id" element={
           <ProtectedRoute allowedRoles={["user", "admin"]}>
             <ReservePage/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/about" element={
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
+            <AboutPage/>
+          </ProtectedRoute>
+        }/>
+        <Route path="/cottages" element={
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
+            <CottagesPage/>
           </ProtectedRoute>
         }/>
 

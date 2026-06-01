@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import cabin from '/cabin.jpg'
 import { Users, Minus, Plus } from 'lucide-react'
 import Calendar from './Calendar'
-import { GetCottageById } from '../../Service/cottageService'
+import { GetCottageById } from '../../../Service/cottageService'
 import { useParams } from 'react-router-dom'
-import { reserveCottage, getReserveCottage } from '../../Service/reserveService'
+import { reserveCottage, getReserveCottage } from '../../../Service/reserveService'
 import toast from 'react-hot-toast'
-import BookingConfirm from '../User/BookingConfirm'
+import BookingConfirm from '../BookingConfirm'
 const API_URL = import.meta.env.VITE_API_URL 
 
 const getImageUrl = (imagePath) => {

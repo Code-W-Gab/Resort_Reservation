@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import AccommodationList from "../../Components/User/AccommodationList";
-import Accommodations from "../../Components/User/Accommodations";
-import Explore from "../../Components/User/Explore";
-import Info from "../../Components/User/Info";
+import AccommodationList from "../../Components/User/Home/AccommodationList";
+import Accommodations from "../../Components/User/Home/Accommodations";
+import Explore from "../../Components/User/Home/Explore";
+import Info from "../../Components/User/Home/Info";
 import Header from "../../Layout/Header";
 import { GetCottage } from "../../Service/cottageService";
 import Footer from "../../Layout/Footer";
@@ -37,7 +37,9 @@ export default function HomePage() {
       <div ref={accommodationsRef}>
         <Accommodations />
       </div>
-      <AccommodationList cottages={cottages}/>
+      <div className="px-40 py-6">
+        <AccommodationList cottages={cottages} />
+      </div>
       <Footer/>
     </main>
   )

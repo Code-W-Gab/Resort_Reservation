@@ -7,7 +7,7 @@ export default function Explore({ onExploreClick }) {
       }}
     >
       {/* Blue Semi-transparent Overlay */}
-      <div className="absolute inset-0 bg-blue-500 opacity-50"></div>
+      <div className="absolute inset-0 bg-blue-700 opacity-50"></div>
       
       {/* Content */}
       <div className="text-center relative z-10">

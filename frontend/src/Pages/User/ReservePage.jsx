@@ -1,4 +1,4 @@
-import Book from "../../Components/User/Book";
+import Book from "../../Components/User/Home/Book";
 import BackMenuHeader from "../../Layout/BackMenuHeader";
 
 export default function ReservePage() {
