@@ -9,9 +9,9 @@ import { readLimiter, writeLimiter } from "../middleware/rateLimiter.mjs";
 const router = Router()
 
 router.post('/register', registerRules, writeLimiter, AuthControllers.Register)
-router.post('/login', loginRules, writeLimiter, AuthControllers.Login)
+router.post('/login', loginRules, AuthControllers.Login)
 router.post('/logout', writeLimiter, AuthControllers.logout)
-router.get('/me', protect, readLimiter, AuthControllers.getMe)
+router.get('/me', protect, AuthControllers.getMe)
 router.post('/verify-email', writeLimiter, AuthControllers.verifyEmail)
 router.post('/resend-otp', writeLimiter, AuthControllers.resendOTP)
 // router.get('/profile', protect, AuthControllers.getProfile)
