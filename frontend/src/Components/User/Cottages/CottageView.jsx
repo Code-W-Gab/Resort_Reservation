@@ -41,15 +41,15 @@ export default function CottageView() {
         <div className="absolute inset-0 bg-blue-700 opacity-50"></div>
         
         {/* Content */}
-        <div className="text-center relative z-10">
-          <h1 className="text-5xl font-bold text-white">Our Accommodations</h1>
-          <p className="text-xl mt-2 text-white">Find your perfect retreat</p>
+        <div className="text-center relative z-10 px-6">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white">Our Accommodations</h1>
+          <p className="text-lg sm:text-xl mt-2 text-white">Find your perfect retreat</p>
         </div>
       </div>
 
       {/* Search and filter options here */}
-      <div className="px-20 py-6">
-        <div className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-4">
+      <div className="px-6 lg:px-10 xl:20 py-6">
+        <div className="bg-white p-4 rounded-lg shadow-lg grid grid-cols-1 sm:grid-cols-2 items-center gap-4">
           <input 
             type="text"  
             placeholder="Search cottages..."
