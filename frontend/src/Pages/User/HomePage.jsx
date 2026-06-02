@@ -41,7 +41,7 @@ export default function HomePage() {
       <div ref={accommodationsRef}>
         <Accommodations />
       </div>
-      <div className="px-40 py-6">
+      <div className="px-6 sm:px-10 lg:px-15 xl:px-25 py-6">
         <AccommodationList cottages={cottages} />
       </div>
       <Footer/>

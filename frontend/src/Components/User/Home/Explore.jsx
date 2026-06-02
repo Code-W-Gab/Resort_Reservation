@@ -10,12 +10,12 @@ export default function Explore({ onExploreClick }) {
       <div className="absolute inset-0 bg-blue-700 opacity-50"></div>
       
       {/* Content */}
-      <div className="text-center relative z-10">
-        <h1 className="text-6xl font-bold text-white">Your Perfect Escape Awaits</h1>
-        <p className="text-2xl my-8 text-white">Discover tranquility in our luxury cottages and cabins nestled in paradise</p>
+      <div className="text-center px-6 relative z-10">
+        <h1 className="text-5xl lg:text-6xl font-semibold text-white">Your Perfect Escape Awaits</h1>
+        <p className="text-md lg:text-2xl my-8 text-white">Discover tranquility in our luxury cottages and cabins nestled in paradise</p>
         <button 
           onClick={onExploreClick}
-          className="bg-gray-200 px-10 py-4 rounded-4xl text-xl font-semibold text-blue-500 hover:bg-white transition"
+          className="bg-gray-200 px-10 py-4 rounded-4xl text-md lg:text-xl font-semibold text-blue-500 hover:bg-white transition"
         >
           Explore Accommodations
         </button>

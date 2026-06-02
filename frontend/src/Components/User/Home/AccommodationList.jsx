@@ -15,7 +15,7 @@ const getImageUrl = (imagePath) => {
 export default function AccommodationList({ cottages }) {
   return(
     <main className='pb-10'>
-      <div className='grid grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6'>
         {
           cottages.map((cottage) => {
             const imageUrl = cottage.Images && cottage.Images.length > 0 
@@ -29,12 +29,12 @@ export default function AccommodationList({ cottages }) {
                   <span className='absolute top-3 right-3 bg-blue-500 text-white px-5 py-1 rounded-2xl'>{cottage.Type}</span>
                 </div>
                 <div className='p-5'>
-                  <h1 className='text-2xl font-semibold'>{cottage.CottageName}</h1>
-                  <p className='text-gray-700 text-lg py-2 h-16'>{truncateString(cottage.Descriptions || 'No description available', 87)}</p>
+                  <h1 className='text-xl lg:text-2xl font-semibold'>{cottage.CottageName}</h1>
+                  <p className='text-gray-700 text-md lg:text-lg py-2 h-16'>{truncateString(cottage.Descriptions || 'No description available', 87)}</p>
 
-                  <div className='flex items-center gap-2 text-gray-700 mt-5'>
+                  <div className='flex items-center gap-2 text-gray-700 mt-3 lg:mt-5'>
                     <Users size={18}/>
-                    <span className='text-md'>Up to {cottage.Capacity} guests</span>
+                    <span className='text-sm md:text-md'>Up to {cottage.Capacity} guests</span>
                   </div>
 
                   <div className='mt-5 flex flex-wrap gap-2 items-center'>
@@ -56,10 +56,10 @@ export default function AccommodationList({ cottages }) {
 
                   <div className='flex items-center justify-between'>
                     <div className='flex flex-col '>
-                      <span className='text-lg text-gray-700'>Starting from</span>
-                      <span className='text-2xl text-blue-500'>₱{cottage.DayTourPrice}</span>
+                      <span className='text-md lg:text-lg text-gray-700'>Starting from</span>
+                      <span className='text-xl lg:text-2xl text-blue-500'>₱{cottage.DayTourPrice}</span>
                     </div>
-                    <button className='bg-blue-500 text-white px-6 py-2 rounded-md'>Book Now</button>
+                    <button className='bg-blue-500 text-white px-6 py-2 rounded-md text-sm lg:text-mg'>Book Now</button>
                   </div>
                 </div>
               </Link>
