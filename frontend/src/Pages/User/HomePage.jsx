@@ -6,14 +6,17 @@ import Info from "../../Components/User/Home/Info";
 import Header from "../../Layout/Header";
 import { GetCottage } from "../../Service/cottageService";
 import Footer from "../../Layout/Footer";
+import HomePageSkeleton from "../../Components/Skeletons/HomePageSkeleton";
 
 export default function HomePage() {
   const [cottages, setCottages] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const fetchCottage = () => {
     GetCottage()
       .then((res) => {
         setCottages(res.data)
+        setLoading(false)
       })
       .catch(err => console.log(err))
   }
@@ -28,7 +31,8 @@ export default function HomePage() {
     accommodationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-
+  if (loading) return <HomePageSkeleton />
+  
   return(
     <main className="bg-[#effaf4]">
       <Header/>
