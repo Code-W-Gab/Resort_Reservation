@@ -33,7 +33,7 @@ export default function Contact() {
   }
 
   return(
-    <main className="grid grid-cols-2 items-start gap-6 px-20 py-6">
+    <main className="grid grid-cols-1 md:grid-cols-2 items-start gap-6 px-6 lg:px-10 xl:20 py-6">
       <div className="bg-blue-600 text-white p-10 rounded-lg shadow-lg space-y-5">
         <h1 className="text-2xl font-bold">Contact Us</h1>
         <div className="flex items-center gap-3">

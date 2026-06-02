@@ -42,7 +42,7 @@ export default function CottageView() {
         
         {/* Content */}
         <div className="text-center relative z-10 px-6">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white">Our Accommodations</h1>
+          <h1 className="text-4xl sm:text-5xl font-semibold text-white">Our Accommodations</h1>
           <p className="text-lg sm:text-xl mt-2 text-white">Find your perfect retreat</p>
         </div>
       </div>
