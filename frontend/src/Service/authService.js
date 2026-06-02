@@ -6,3 +6,4 @@ export const verifyEmail = (Email, otp) => api.post('/auth/verify-email', {Email
 export const resendOTP = (Email) => api.post('/auth/resend-otp', {Email})
 export const me = () => api.get('/auth/me')
 export const logout = () => api.post('/auth/logout')
+export const sendContactMessage = (name, email, message) => api.post('/auth/contact', {name, email, message})

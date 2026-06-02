@@ -7,7 +7,7 @@ export default function Info() {
     {"title": "Perfect for Groups", "desc": "Accommodations for couples to large families", "logo": <Users size={30}/>},
   ]
   return(
-    <main className='bg-white grid grid-cols-3 py-20 px-20 items-center justify-center'>
+    <main className='grid grid-cols-3 py-20 px-20 items-center justify-center'>
       {content.map((c) => {
         return(
           <div key={c.title} className='flex flex-col gap-3 items-center'>

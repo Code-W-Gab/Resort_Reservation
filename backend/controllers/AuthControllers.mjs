@@ -246,7 +246,41 @@ const AuthControllers = {
         message: error.message
       })
     }
+  },
+  async sendContactMessage (req, res) {
+    try {
+      const { name, email, message } = req.body
+      if (!name || !email || !message) {
+        return res.status(400).json({
+          success: false,
+          message: "All fields are required"
+        })
+      }
+
+      const emailContent = `
+      <h2>New Contact Message From Serenity Resort</h2>
+      
+      <p><strong>Name:</strong> ${name}</p>
+      
+      <p><strong>Email:</strong> ${email}</p>
+      
+      <p><strong>Message:</strong></p>
+      
+      <p>${message}</p>
+      `
+
+      // Send email to admin
+      await sendEmail(process.env.EMAIL_USER, "New Contact Message", emailContent)
+      res.status(200).json({
+        success: true,
+        message: "Message sent successfully"
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message
+      })
+    }
   }
 }
-
 export default AuthControllers
