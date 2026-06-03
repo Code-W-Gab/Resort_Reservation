@@ -26,7 +26,7 @@ export default function ProfileBtnMenu() {
       <MenuItems
         transition
         anchor="bottom end"
-        className="w-52 origin-top-right bg-gray-600 rounded-md shadow-lg mt-2 focus:outline-none"
+        className="z-50 w-52 origin-top-right bg-gray-600 rounded-md shadow-lg mt-2 focus:outline-none"
       >
         <MenuItem className="p-3 text-white border-b border-gray-400">
           <h1 className='text-md text-center font-semibold'>
