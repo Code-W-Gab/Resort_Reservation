@@ -29,7 +29,7 @@ export default function Status({ count, reserve }) {
   ]
 
   return(
-    <main className="px-20 py-10 grid grid-cols-4 gap-6">
+    <main className="px-6 sm:px-10 xl:px-20 py-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       {
         status.map((s, index) => {
           return <div key={index} className="bg-white inset-shadow-sm shadow-sm rounded-md p-6">

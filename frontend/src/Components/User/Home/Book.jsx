@@ -21,7 +21,6 @@ export default function Book() {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [cottageType, setCottageType] = useState("")
   const [capacity, setCapacity] = useState(0)
   const [checkIn, setCheckIn] = useState(null)
@@ -187,7 +186,7 @@ export default function Book() {
   }, [cottage?.CottageName])
 
   return(
-    <main className='py-10 grid grid-cols-2 gap-4 px-20 items-start'>
+    <main className='px-6 sm:px-10 xl:px-20 py-10 grid grid-cols-1 lg:grid-cols-2 gap-4  items-start'>
       {loading || !cottage 
       
       ? (
@@ -198,17 +197,17 @@ export default function Book() {
       :
       <>
         <div className='border border-gray-300 rounded-2xl bg-white shadow-lg'>
-          <img src={imageUrl} alt='cabin' className=' h-100 w-full object-cover rounded-tl-xl rounded-tr-xl'/>
+          <img src={imageUrl} alt='cabin' className='h-80 sm:h-100 w-full object-cover rounded-tl-xl rounded-tr-xl'/>
           <div className='p-8'>
-            <h1 className='text-4xl font-semibold'>{cottage.CottageName}</h1>
-            <p className='text-gray-700 text-lg py-2 my-3'>{cottage.Descriptions}</p>
+            <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold'>{cottage.CottageName}</h1>
+            <p className='text-gray-700 text-md sm:text-lg py-2 my-3'>{cottage.Descriptions}</p>
 
             <div className='flex items-center gap-2 text-gray-700'>
               <Users size={20}/>
-              <span className='text-lg'>Capacity: Up to {cottage.Capacity} guests</span>
+              <span className='text-md sm:text-lg'>Capacity: Up to {cottage.Capacity} guests</span>
             </div>
             <div className='border-b my-5 border-gray-300'></div>
-            <h1 className='text-xl font-semibold'>Amenities</h1>
+            <h1 className='text-lg sm:text-xl font-semibold'>Amenities</h1>
             <div className='mt-5 flex flex-wrap gap-2 items-center'>
               {cottage.Amenities.map((amenity, index) => {
                 return(
@@ -224,31 +223,31 @@ export default function Book() {
       }
   
       <div className='border border-gray-300 rounded-2xl bg-white shadow-lg p-6'>
-        <h1 className='text-2xl font-semibold'>Book Your Stay</h1>
+        <h1 className='text-xl sm:text-2xl font-semibold'>Book Your Stay</h1>
         <div className='mt-7'>
-          <label className='font-semibold'>Booking Type</label>
-          <div className='grid grid-cols-2 gap-4 mt-3'>
+          <label className='font-semibold text-md'>Booking Type</label>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3'>
             <button 
               onClick={() => setCottageType("dayTour")}
-              className={`border-3 p-4 rounded-xl ${
+              className={`border-3 p-2.5 sm:p-4 rounded-xl ${
                 cottageType === "dayTour"
                 ? 'border-blue-500 bg-blue-100'
                 : 'border-gray-300'
               }`}
             >
-              <span className='text-md font-semibold text-gray-500'>Day Tour</span>
-              <p className='text-blue-500 text-3xl'>₱{cottage?.DayTourPrice || 0}</p>
+              <span className='text-sm sm:text-md font-semibold text-gray-500'>Day Tour</span>
+              <p className='text-blue-500 text-2xl sm:text-3xl'>₱{cottage?.DayTourPrice || 0}</p>
             </button>
             <button 
               onClick={() => setCottageType("overnight")}
-              className={`border-3 p-4 rounded-xl ${
+              className={`border-3 p-2.5 sm:p-4 rounded-xl ${
                 cottageType === "overnight"
                 ? 'border-blue-500 bg-blue-100'
                 : 'border-gray-300'
               }`}
             >
-              <span className='text-md font-semibold text-gray-500'>Overnight</span>
-              <p className='text-blue-500 text-3xl'>₱{cottage?.OvernightPrice || 0}/night</p>
+              <span className='text-sm sm:text-md font-semibold text-gray-500'>Overnight</span>
+              <p className='text-blue-500 text-2xl sm:text-3xl'>₱{cottage?.OvernightPrice || 0}/night</p>
             </button>
           </div>
         </div>

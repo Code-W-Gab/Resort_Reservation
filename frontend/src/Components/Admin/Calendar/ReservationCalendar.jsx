@@ -123,16 +123,16 @@ export default function ReservationCalendar({ reserve = [] }) {
   };
 
   return (
-    <main className="bg-white p-6 mb-5 mx-20 rounded-lg shadow-md">
+    <main className="bg-white p-4 sm:p-6 mb-5  mx-6 sm:mx-10 xl:mx-20 rounded-lg shadow-md">
       <div className="mb-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Reservation Calendar</h1>
+        <div className="flex flex-col md:flex-row md:justify-between gap-4 md:items-center mb-6">
+          <h1 className="text-xl text-start sm:text-2xl font-semibold">Reservation Calendar</h1>
           
-          <div className="flex items-center gap-4">
+          <div className="flex max-sm:flex-col sm:justify-between items-center gap-4">
             <select
               value={selectedCottage}
               onChange={(e) => setSelectedCottage(e.target.value)}
-              className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition max-sm:w-full"
             >
               {cottages.map(cottage => (
                 <option key={cottage} value={cottage}>
@@ -141,7 +141,7 @@ export default function ReservationCalendar({ reserve = [] }) {
               ))}
             </select>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <button
                 onClick={handlePrevMonth}
                 className="p-2 hover:bg-gray-100 rounded transition"
@@ -167,8 +167,8 @@ export default function ReservationCalendar({ reserve = [] }) {
 
         {/* Legend - Only show actual cottages from reservations */}
         <div className="mb-4">
-          <p className="text-sm font-semibold mb-2">Cottage Legend:</p>
-          <div className="flex flex-wrap gap-4">
+          <p className="text-sm font-semibold mb-4">Cottage Legend:</p>
+          <div className="flex flex-wrap max-sm:flex-col gap-4">
             {cottages
               .filter(cottage => cottage !== 'All Cottages')
               .map(cottage => {

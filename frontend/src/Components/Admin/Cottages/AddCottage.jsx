@@ -6,9 +6,9 @@ export default function AddCottage({ fetchCottage }) {
   
   return(
     <main>
-      <main className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Manage Cottages</h1>
-        <button className="bg-blue-500 text-white px-5 py-2.5 rounded-md" onClick={() => setIsAddCottageOpenModal(true)}>Add New Cottage</button>
+      <main className="flex items-center gap-4 justify-between">
+        <h1 className="text-lg sm:text-2xl font-semibold">Manage Cottages</h1>
+        <button className="bg-blue-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-md text-xs sm:text-md" onClick={() => setIsAddCottageOpenModal(true)}>Add New Cottage</button>
       </main>
 
       {isAddCottageOpenModal && (

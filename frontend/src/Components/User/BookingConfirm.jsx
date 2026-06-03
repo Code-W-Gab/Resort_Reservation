@@ -8,7 +8,7 @@ export default function BookingConfirm({name, cottageName, capacity, type, check
 
   return(
     <main className="flex items-center justify-center min-h-screen">
-      <div className="bg-white shadow-2xl rounded-xl border border-gray-200 p-10 w-100">
+      <div className="bg-white shadow-2xl rounded-xl border border-gray-200 p-10 w-80 sm:w-100">
         <div className="flex flex-col items-center justify-between gap-4 text-center">
           <div className="p-4 bg-green-100 rounded-full mb-2">
             <Check size={35} className="text-green-700"/>

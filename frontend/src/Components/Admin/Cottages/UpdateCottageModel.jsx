@@ -94,13 +94,13 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
       })
   }
   return(
-    <main className='bg-white w-200 h-[85vh] rounded-xl overflow-hidden flex flex-col'>
+    <main className='bg-white w-80 sm:w-120 md:w-150 lg:w-200 h-[85vh] rounded-xl overflow-hidden flex flex-col'>
       <header className='h-20 flex items-center justify-between text-white bg-blue-500 px-6 w-full shrink-0'>
         <h1 className='text-xl font-semibold'>Update Cottage</h1>
         <button className='rounded-full p-1 hover:bg-gray-400' onClick={onClose}><X /></button>
       </header>
       <div className='px-6 py-6 overflow-y-auto'>
-        <div className='grid grid-cols-2 gap-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <div className='flex flex-col gap-2'>
             <label className='font-semibold'>Cottage Name:</label>
             <input 
@@ -146,7 +146,7 @@ export default function UpdateCottageModal({ onClose, fetchCottage, id }) {
           ></textarea>
         </div>
 
-        <div className='grid grid-cols-3 gap-3 mt-6'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-3 mt-6'>
           <div className='flex flex-col gap-2'>
             <label className='font-semibold'>Capacity (Guests):</label>
             <input 

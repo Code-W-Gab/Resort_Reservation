@@ -153,7 +153,7 @@ export default function Calendar({ bookingType, onDateSelect, checkIn, checkOut,
         {renderCalendar()}
       </div>
 
-      <div className='flex items-center gap-6 mt-4'>
+      <div className='grid grid-cols-2 sm:flex items-center gap-6 mt-4'>
         <div className='flex items-center gap-2'>
           <div className='size-3 bg-blue-500 rounded-sm'></div>
           <p className='text-xs'>Selected</p>

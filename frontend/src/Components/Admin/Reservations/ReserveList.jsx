@@ -39,109 +39,122 @@ export default function ReserveList({ reserve, fetchReserve }) {
   }
 
   return(
-    <main className="px-20">
-      <h1 className="text-2xl font-semibold">Manage Reservations</h1>
-      <div className="grid grid-cols-[1.5fr_repeat(3,1fr)_repeat(4,120px)] items-center mt-6 bg-blue-500 text-white font-semibold px-3 py-3 rounded-tl-md rounded-tr-md">
-        <p>GUEST</p>
-        <p>COTTAGE</p>
-        <p>DATES</p>
-        <p>TYPES</p>
-        <p>GUESTS</p>
-        <p>TOTAL</p>
-        <p>STATUS</p>
-        <p>ACTIONS</p>
+    <main className="px-6 sm:px-10 xl:px-20 pb-10">
+      <h1 className="text-2xl font-semibold mb-6">Manage Reservations</h1>
+        
+      {/* Scrollable Container */}
+      <div className="overflow-x-auto rounded-tl-md rounded-tr-md border border-gray-300">
+        
+        {/* Table Structure */}
+        <table className="w-full border-collapse min-w-max">
+          <thead>
+            <tr className="bg-blue-500 text-white font-semibold">
+              <th className="border border-gray-300 px-3 py-3 text-left w-64">GUEST</th>
+              <th className="border border-gray-300 px-3 py-3 text-left w-40">COTTAGE</th>
+              <th className="border border-gray-300 px-3 py-3 text-left w-40">DATES</th>
+              <th className="border border-gray-300 px-3 py-3 text-left w-32">TYPES</th>
+              <th className="border border-gray-300 px-3 py-3 text-center w-24">GUESTS</th>
+              <th className="border border-gray-300 px-3 py-3 text-center w-24">TOTAL</th>
+              <th className="border border-gray-300 px-3 py-3 text-center w-24">STATUS</th>
+              <th className="border border-gray-300 px-3 py-3 text-center w-28">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reserve.length === 0
+            ? <tr>
+                <td colSpan="8" className="py-5 px-2 text-xl text-center border border-gray-300">No reservation</td>
+              </tr>
+            : reserve.map((r) => {
+              return(
+                <tr key={r._id} className="border-b border-gray-300 hover:bg-gray-50">
+                  <td className="border border-gray-300 px-3 py-3 w-64">
+                    <p className="font-medium">{r.FullName}</p>
+                    <p className='text-gray-500 text-sm'>{r.Email}</p>
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-40">
+                    <p>{r.CottageName}</p>
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-40">
+                    {r.DayTourDate === null 
+                      ? <p>{`${formatDate(r.CheckInDate)} - ${formatDate(r.CheckOutDate)}`}</p>
+                      : <p>{formatDate(r.DayTourDate)}</p>
+                    }
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-32">
+                    {r.DayTourDate === null 
+                      ? <p>Overnight</p>
+                      : <p>Day Tour</p>
+                    }
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-24 text-center">
+                    <p>{r.Capacity}</p>
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-24 text-center">
+                    <p>₱{r.Total}</p>
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-24 text-center">
+                    {r.Status === "Confirmed"
+                      ? <p className="bg-green-200 text-green-800 px-3 py-1.5 text-xs text-center rounded-2xl inline-block">{r.Status}</p>
+                      : r.Status === "Pending" 
+                      ? <p className="bg-orange-200 text-orange-800 px-3 py-1.5 text-xs text-center rounded-2xl inline-block">{r.Status}</p>
+                      : <p className="bg-red-200 text-red-800 px-3 py-1.5 text-xs text-center rounded-2xl inline-block">{r.Status}</p>
+                    }
+                  </td>
+                  <td className="border border-gray-300 px-3 py-3 w-28">
+                    <div className="flex items-center justify-center gap-3">
+                      {r.Status === "Confirmed"
+                        ? <>
+                            <button onClick={() => {
+                              setIsCancelModalOpen(true)
+                              setSelectedId(r._id)
+                            }}>
+                              <CircleX size={22} className='text-red-600 hover:text-red-800'/>
+                            </button>
+                            <button onClick={() => {
+                              setIsDeleteModalOpen(true)
+                              setSelectedId(r._id)
+                            }}>
+                              <Trash2 size={22} className='text-gray-500 hover:text-gray-700'/>
+                            </button>
+                          </>
+                        : r.Status === "Pending"
+                        ? <>
+                            <button onClick={() => {
+                              setIsConfirmModalOpen(true)
+                              setSelectedId(r._id)
+                            }}>
+                              <CircleCheckBig size={22} className='text-green-600 hover:text-green-800'/>
+                            </button>
+                            <button onClick={() => {
+                              setIsCancelModalOpen(true)
+                              setSelectedId(r._id)
+                            }}>
+                              <CircleX size={22} className='text-red-600 hover:text-red-800'/>
+                            </button>
+                            <button onClick={() => {
+                              setIsDeleteModalOpen(true)
+                              setSelectedId(r._id)
+                            }}>
+                              <Trash2 size={22} className='text-gray-500 hover:text-gray-700'/>
+                            </button>
+                          </>
+                        : <button onClick={() => {
+                            setIsDeleteModalOpen(true)
+                            setSelectedId(r._id)
+                          }}>
+                            <Trash2 size={22} className='text-gray-500 hover:text-gray-700'/>
+                          </button>
+                      }
+                    </div>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
-      
-      {reserve.length === 0
-      ? <div className='py-5 px-2 text-xl'>No reservation</div>
-      : reserve.map((r) => {
-        return(
-          <div key={r._id} className="grid grid-cols-[1.5fr_repeat(3,1fr)_repeat(4,120px)] items-center p-3 border border-t-0 border-gray-300">
-            <div className="pr-5 break-all">
-              <p>{r.FullName}</p>
-              <p className='text-gray-500'>{r.Email}</p>
-            </div>
-            <div className="pr-5 break-all">
-              <p>{r.CottageName}</p>
-            </div>
-            <div className="pr-5 break-all">
-              {r.DayTourDate === null 
-                ? <p>{`${formatDate(r.CheckInDate)} - ${formatDate(r.CheckOutDate)}`}</p>
-                : <p>{formatDate(r.DayTourDate)}</p>
-              }
-            </div>
-            <div className="pr-5 break-all">
-              {r.DayTourDate === null 
-                ? <p>Overnight</p>
-                : <p>Day Tour</p>
-              }
-            </div>
-            
-            <div className="pr-5 break-all">
-              <p>{r.Capacity}</p>
-            </div>
-            <div className="pr-5 break-all">
-              <p>₱{r.Total}</p>
-            </div>
-            <div className="pr-5 break-all">
-              {r.Status === "Confirmed"
-                ? <p className="bg-green-200 text-green-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
-                : r.Status === "Pending" 
-                ? <p className="bg-orange-200 text-orange-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
-                : <p className="bg-red-200 text-red-800 px-3 py-1.5 text-xs text-center rounded-2xl w-20">{r.Status}</p>
-              }
-            </div>
-            <div>
-              {r.Status === "Confirmed"
-                ? <div className="flex items-center gap-4 pr-5 break-all">
-                    <button onClick={() => {
-                      setIsCancelModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <CircleX size={25} className='text-red-600'/>
-                    </button>
-                    <button onClick={() => {
-                      setIsDeleteModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <Trash2 size={25} className='text-gray-500'/>
-                    </button>
-                  </div>
-                : r.Status === "Pending"
-                ? <div className="flex items-center gap-4 pr-5 break-all">
-                    <button onClick={() => {
-                      setIsConfirmModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <CircleCheckBig size={25} className='text-green-600'/>
-                    </button>
-                    <button onClick={() => {
-                      setIsCancelModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <CircleX size={25} className='text-red-600'/>
-                    </button>
-                    <button onClick={() => {
-                      setIsDeleteModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <Trash2 size={25} className='text-gray-500'/>
-                    </button>
-                  </div>
-                : <div>
-                    <button onClick={() => {
-                      setIsDeleteModalOpen(true)
-                      setSelectedId(r._id)
-                    }}>
-                      <Trash2 size={25} className='text-gray-500'/>
-                    </button>
-                  </div>
-              }
-            </div>
-          </div>
-        )
-      })}
 
+      {/* Modals */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 flex bg-gray-800/50 items-center justify-center z-40">
           <div className="z-50">

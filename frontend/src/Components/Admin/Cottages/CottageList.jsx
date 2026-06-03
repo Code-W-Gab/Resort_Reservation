@@ -33,11 +33,11 @@ export default function CottageList({ cottages, fetchCottage }) {
   }
 
   return(
-    <main className='p-6 mb-5 bg-white mx-20 rounded-lg shadow-md'>
+    <main className='p-6 mb-5 bg-white mx-6 sm:mx-10 xl:mx-20 rounded-lg shadow-md'>
       <div className='pb-8 pt-2'>
         <AddCottage fetchCottage={fetchCottage}/>
       </div>
-      <div className='grid grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
         {cottages.map((cottage) => {
           const imageUrl = cottage.Images && cottage.Images.length > 0 
             ? getImageUrl(cottage.Images[0]) 
