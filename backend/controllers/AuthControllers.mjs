@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 import {generateOTP} from "../middleware/generateOTP.mjs";
-import {sendEmail} from '../middleware/sendEmail.mjs';
+import { sendEmail } from '../middleware/sendEmail.mjs';
 
 const AuthControllers = {
   async Register (req, res) {
@@ -38,7 +38,17 @@ const AuthControllers = {
       })
 
       // Send OTP email
-      await sendEmail(Email, "Your Verification Code", `Your OTP code is: ${otp}`)
+      try {
+        await sendEmail(Email, "Your Verification Code", `Your OTP code is: ${otp}`)
+      } catch (emailError) {
+        console.error("Failed to send OTP email:", emailError)
+        // Optionally, you can choose to delete the user if email sending fails
+        await AuthSchema.findByIdAndDelete(user._id)
+        return res.status(500).json({
+          success: false,
+          message: "Failed to send OTP email. Please try registering again."
+        })
+      }
       
       res.status(201).json({
         success: true,
@@ -236,7 +246,16 @@ const AuthControllers = {
       await user.save()
 
       // Send OTP email
-      await sendEmail(Email, "Your New Verification Code", `Your new OTP code is: ${otp}`)
+      try {
+        await sendEmail(Email, "Your New Verification Code", `Your new OTP code is: ${otp}`)
+      } catch (emailError) {
+        console.error("Failed to send OTP email:", emailError)
+        return res.status(500).json({
+          success: false,
+          message: "Failed to send OTP email. Please try again."
+        })
+      }  
+
       res.status(200).json({
         success: true,
         message: "New OTP sent to your email"

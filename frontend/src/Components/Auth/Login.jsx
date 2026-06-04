@@ -37,7 +37,8 @@ export default function Login() {
 
   function handleGoogleLogin() {
     // Redirect to the backend route that initiates Google OAuth
-    window.location.href = "http://localhost:8080/auth/google"
+    const backendURL = import.meta.env.VITE_API_URL || "http://localhost:8080"
+    window.location.href = `${backendURL}/auth/google`
   }
 
   return(
@@ -52,40 +53,40 @@ export default function Login() {
       
       {/* Login Form - with relative z-10 to appear above overlay */}
       <div className="relative z-10">
-        <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
-          <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
-          <p>Welcome back! Please login to continue</p>
+        <div className="text-center text-white bg-blue-600 w-80 sm:w-100 p-4 sm:p-5 rounded-tl-xl rounded-tr-xl">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Serenity Resort</h1>
+          <p className="text-sm sm:text-md">Welcome back! Please login to continue</p>
         </div>
-        <div className="p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl">
+        <div className="p-5 sm:p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl">
           <div className="flex flex-col gap-1.5">
-            <label>Email Address</label>
+            <label className="text-sm sm:text-md font-medium text-gray-700">Email Address</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-sm sm:text-md"
               type="email" 
               placeholder="example@gmail.com" 
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label>Password</label>
+            <label className="text-sm sm:text-md font-medium text-gray-700">Password</label>
             <input 
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-sm sm:text-md"
               type="password" 
               placeholder="Enter your password" 
             />
           </div>
-          <div className="mt-3">
-            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">{loading ? "Logging in..." : "Login"}</button>
+          <div className="mt-1">
+            <button disabled={loading} onClick={handleLogin} className="py-2 bg-blue-600 text-white text-md sm:text-lg rounded-lg w-full hover:bg-blue-700 transition mb-3">{loading ? "Logging in..." : "Login"}</button>
             <div className="flex items-center gap-4 my-4">
               <div className="flex-1 border-b border-gray-300"></div>
               <div className="text-gray-700 whitespace-nowrap">Or continue with</div>
               <div className="flex-1 border-b border-gray-300"></div>
             </div>
-            <button onClick={handleGoogleLogin} className=" flex items-center justify-center border border-gray-300 py-2.5 bg-white text-lg font-medium rounded-lg w-full mb-3">
-              <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" className="inline-block size-6 mr-2"/>
+            <button disabled={loading} onClick={handleGoogleLogin} className=" flex items-center justify-center border border-gray-300 py-2 bg-white text-md sm:text-lg font-medium rounded-lg w-full mb-3">
+              <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" className="inline-block size-5 sm:size-6 mr-2"/>
               Login with Google
             </button>
             {/* Register */}

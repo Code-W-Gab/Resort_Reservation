@@ -83,11 +83,11 @@ export default function VerifyOTP() {
       <div className="absolute inset-0 bg-blue-500 opacity-40"></div>
       
       <div className="relative z-10">
-        <div className="text-center text-white bg-blue-600 w-max-100 p-7 rounded-tl-xl rounded-tr-xl">
-          <h1 className="text-4xl font-semibold mb-2">Verify Email</h1>
+        <div className="text-center text-white bg-blue-600 w-80 sm:w-max-100 p-7 rounded-tl-xl rounded-tr-xl">
+          <h1 className="text-3xl sm:text-4xl font-semibold mb-2">Verify Email</h1>
           <p>Enter the OTP code sent to your email</p>
         </div>
-        <div className="p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl w-100">
+        <div className="p-6 sm:p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl w-100">
           <div className="bg-blue-50 p-4 rounded-lg text-center">
             <p className="text-gray-700">Email: <span className="font-semibold">{email}</span></p>
           </div>
@@ -116,7 +116,7 @@ export default function VerifyOTP() {
             <button 
               onClick={handleVerifyOTP} 
               disabled={loading || timer <= 0}
-              className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3 disabled:opacity-50"
+              className="py-2 sm:py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3 disabled:opacity-50"
             >
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
@@ -124,7 +124,7 @@ export default function VerifyOTP() {
             <button 
               onClick={handleResendOTP} 
               disabled={resendLoading || timer > 0}
-              className="py-2.5 bg-gray-300 text-gray-700 text-lg rounded-lg w-full hover:bg-gray-400 transition disabled:opacity-50"
+              className="py-2 sm:py-2.5 bg-gray-300 text-gray-700 text-lg rounded-lg w-full hover:bg-gray-400 transition disabled:opacity-50"
             >
               {resendLoading ? "Sending..." : "Resend OTP"}
             </button>

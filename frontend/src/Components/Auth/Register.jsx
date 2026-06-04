@@ -46,10 +46,6 @@ export default function Register() {
       .finally(() => setLoading(false))
   }
 
-  function handleGoogleLogin() {
-    window.location.href = "http://localhost:8080/auth/google"
-  }
-
   return(
     <main 
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
@@ -60,57 +56,48 @@ export default function Register() {
       <div className="absolute inset-0 bg-blue-500 opacity-40"></div>
       
       <div className="relative z-10">
-        <div className="text-center text-white bg-blue-600 w-110 p-7 rounded-tl-xl rounded-tr-xl">
-          <h1 className="text-4xl font-semibold mb-2">Serenity Resort</h1>
-          <p>Create an account! Please register to continue</p>
+        <div className="text-center text-white bg-blue-600 w-80 sm:w-100 p-4 sm:p-5 rounded-tl-xl rounded-tr-xl">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Serenity Resort</h1>
+          <p className="text-sm sm:text-md">Create an account! Please register to continue</p>
         </div>
-        <div className="p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl">
+        <div className="p-5 sm:p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl">
           <div className="flex flex-col gap-1.5">
-            <label>Full Name</label>
+            <label className="text-sm sm:text-md font-medium text-gray-700">Full Name</label>
             <input
               onChange={(e) => setFullName(e.target.value)}
               value={fullName}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-sm sm:text-md"
               type="text" 
               placeholder="Juan Dela Cruz" 
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label>Email Address</label>
+            <label className="text-sm sm:text-md font-medium text-gray-700">Email Address</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-sm sm:text-md"
               type="email" 
               placeholder="example@gmail.com" 
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label>Password</label>
+            <label className="text-sm sm:text-md font-medium text-gray-700">Password</label>
             <input 
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md"
+              className="border border-gray-500 px-4 py-2.5 rounded-lg text-sm sm:text-md"
               type="password" 
               placeholder="Enter your password" 
             />
           </div>
-          <div className="mt-3">
+          <div className="mt-1">
             <button 
               onClick={handleRegister} 
               disabled={loading}
-              className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3 disabled:opacity-50"
+              className="py-2 bg-blue-600 text-white text-md sm:text-lg rounded-lg w-full hover:bg-blue-700 transition mb-3 disabled:opacity-50"
             >
               {loading ? "Registering..." : "Register"}
-            </button>
-            <div className="flex items-center gap-4 my-4">
-              <div className="flex-1 border-b border-gray-300"></div>
-              <div className="text-gray-700 whitespace-nowrap">Or continue with</div>
-              <div className="flex-1 border-b border-gray-300"></div>
-            </div>
-            <button onClick={handleGoogleLogin} className="flex items-center justify-center border border-gray-300 py-2.5 bg-white text-lg font-medium rounded-lg w-full mb-3">
-              <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo" className="inline-block size-6 mr-2"/>
-              Login with Google
             </button>
             <p className="text-center text-gray-700">Already have an account? <Link to="/auth/login" className="font-semibold text-blue-500 cursor-pointer hover:underline">Sign in.</Link></p>
           </div>

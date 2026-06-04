@@ -14,7 +14,7 @@ export default function Header() {
     { name: 'About', path: '/about' },
   ]
   return(
-    <header className="bg-white shadow-md flex items-center justify-between px-10 h-18">
+    <header className="bg-white shadow-md flex items-center justify-between px-6 sm:px-10 h-18">
       <h1 className="text-xl sm:text-2xl font-semibold text-blue-500">Serenity Resort</h1>
       <div className="hidden lg:flex items-center gap-6">
           {nav.map((item) => {

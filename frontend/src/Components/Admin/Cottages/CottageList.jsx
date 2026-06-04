@@ -33,7 +33,7 @@ export default function CottageList({ cottages, fetchCottage }) {
   }
 
   return(
-    <main className='p-6 mb-5 bg-white mx-6 sm:mx-10 xl:mx-20 rounded-lg shadow-md'>
+    <main className='p-4 sm:p-6 mb-5 bg-white mx-6 sm:mx-10 xl:mx-20 rounded-lg shadow-md'>
       <div className='pb-8 pt-2'>
         <AddCottage fetchCottage={fetchCottage}/>
       </div>
@@ -54,7 +54,7 @@ export default function CottageList({ cottages, fetchCottage }) {
               </div>
               <div className='p-4'>
                 <h1 className='text-xl font-semibold'>{cottage.CottageName}</h1>
-                <p className='text-gray-500 text-md py-2 h-15'>{truncateString(cottage.Descriptions, 87)}</p>
+                <p className='text-gray-500 text-md py-2'>{truncateString(cottage.Descriptions, 87)}</p>
                 <div className='flex items-center justify-between mt-3'>
                   <p>Day Tour:</p>
                   <p>₱{cottage.DayTourPrice}</p>

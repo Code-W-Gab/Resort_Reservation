@@ -3,7 +3,7 @@ import { formatDate } from '../../../Utils/formatDate';
 
 export default function ReservationDetail({ reservation, onClose }) {
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6 w-full min-w-80 md:min-w-100">
+    <div className="bg-white rounded-lg shadow-xl p-6 w-80 md:w-100">
       <h2 className="text-xl font-semibold mb-5">Reservation Details</h2>
 
       <div className="space-y-3 text-sm">

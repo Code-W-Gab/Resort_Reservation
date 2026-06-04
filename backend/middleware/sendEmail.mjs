@@ -2,6 +2,11 @@ import nodemailer from 'nodemailer';
 
 export const sendEmail = async (to, subject, text) => { 
   try {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('EMAIL_USER or EMAIL_PASS not configured')
+      throw new Error('Email configuration missing')
+    }
+
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
     
