@@ -8,11 +8,14 @@ export default function Login() {
   const { setUser } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   function handleLogin() {
+    setLoading(true)
     login(email, password)
       .then(res => {
+        setLoading(false)
         setUser(res.data.user)
         if (res.data.user.role === "admin"){
           navigate('/calendar')
@@ -26,6 +29,7 @@ export default function Login() {
         }
       })
       .catch (error => {
+        setLoading(false)
         console.log(error)
         toast.error("Login Failed")
       })
@@ -74,7 +78,7 @@ export default function Login() {
             />
           </div>
           <div className="mt-3">
-            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">Login</button>
+            <button onClick={handleLogin} className="py-2.5 bg-blue-600 text-white text-xl rounded-lg w-full hover:bg-blue-700 transition mb-3">{loading ? "Logging in..." : "Login"}</button>
             <div className="flex items-center gap-4 my-4">
               <div className="flex-1 border-b border-gray-300"></div>
               <div className="text-gray-700 whitespace-nowrap">Or continue with</div>

@@ -36,6 +36,7 @@ export default function Book() {
   const [confirmCheckOut, setConfirmCheckOut] = useState(null)
   const [confirmTotal, setConfirmTotal] = useState(0)
   const [reservedDates, setReservedDates] = useState([])
+  const [confirmLoading, setConfirmLoading] = useState(false)
 
   useEffect(() => {
     setCheckIn(null)
@@ -117,6 +118,8 @@ export default function Book() {
       Phone: parseInt(phone),
       Total: total
     }
+    
+    setConfirmLoading(true)
     reserveCottage(
       bookingData.CottageName,
       bookingData.Capacity,
@@ -129,6 +132,7 @@ export default function Book() {
       bookingData.Total
     )
       .then(res => {
+        setConfirmLoading(false)
         toast.success("Booking confirmed successfully!")
         setConfirmName(fullName)
         setConfirmGuest(capacity)
@@ -145,7 +149,11 @@ export default function Book() {
         setCheckOut(null)
         setCottageType("")
       })
-      .catch(err => console.log(err))
+      .catch(err => 
+        { console.log(err) 
+          setConfirmLoading(false)
+          toast.error("Failed to confirm booking. Please try again.")
+        })
   }
 
   
@@ -338,7 +346,7 @@ export default function Book() {
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            Confirm Booking
+            {confirmLoading ? "Confirming..." : "Confirm Booking"}
           </button>
         </div>
       </div>

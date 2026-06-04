@@ -11,7 +11,7 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
   const [dayTourPrice, setDayTourPrice] = useState("")
   const [overnightPrice, setOvernightPrice] = useState("")
   const [amenities, setAmenities] = useState("")
-
+  const [isLoading, setIsLoading] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const [images, setImages] = useState([])
   const fileInputRef = useRef(null)
@@ -63,8 +63,10 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
       toast.error("Contents cannot be empty.")
       return
     }
+    setIsLoading(true)
     AddCottage(cottageName, cottageType, descriptions, capacity, dayTourPrice, overnightPrice, amenities, images)
       .then(res => {
+        setIsLoading(false)
         toast.success("Added Successfully!")
         setCottageName("")
         setCottageType("")
@@ -76,7 +78,10 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
         onClose()
         fetchCottage()
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setIsLoading(false)
+        console.log(err)
+      })
   }
 
   return(
@@ -231,7 +236,9 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
 
         <div className='grid grid-cols-2 gap-3 mt-7'>
           <button onClick={onClose} className='border border-gray-500 text-gray-500 w-full py-2.5 rounded-md font-semibold'>Cancel</button>
-          <button onClick={handleSubmit} className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>Add Cottage</button>
+          <button onClick={handleSubmit} disabled={isLoading} className='border border-blue-500 bg-blue-500 text-white w-full py-2.5 rounded-md font-semibold'>
+            {isLoading ? 'Adding...' : 'Add Cottage'}
+          </button>
         </div>
       </div>
     </main>
