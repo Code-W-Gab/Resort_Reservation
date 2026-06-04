@@ -84,7 +84,7 @@ const AuthControllers = {
       const token = jwt.sign(
         { 
           id: user._id,
-          role: user.Role
+          role: user.Role.toLowerCase(),
         },
         process.env.JWT_SECRET,
         { expiresIn: '7d' }
@@ -93,7 +93,7 @@ const AuthControllers = {
       // store inside cookie
       res.cookie("token", token, {
         httpOnly: true,
-        secure: false, // true in production (HTTPS)
+        secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000
       });
@@ -105,7 +105,7 @@ const AuthControllers = {
           id: user._id,
           name: user.FullName,
           email: user.Email,
-          role: user.Role,
+          role: user.Role.toLowerCase(),
         }
       })
     } catch (error) {
@@ -123,7 +123,7 @@ const AuthControllers = {
           id: user._id,
           name: user.FullName,
           email: user.Email,
-          role: user.Role
+          role: user.Role.toLowerCase()
         }
       })
     } catch (error) {
@@ -137,6 +137,7 @@ const AuthControllers = {
     try {
       res.cookie("token", "", {
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
         sameSite: "lax",
         expires: new Date(0),
       });
@@ -157,7 +158,7 @@ const AuthControllers = {
     const token = jwt.sign(
       { 
         id: user._id,
-        role: user.Role,
+        role: user.Role.toLowerCase(),
         name: user.FullName
       },
       process.env.JWT_SECRET,
@@ -167,12 +168,12 @@ const AuthControllers = {
     // Store token in cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // true in production (HTTPS)
+      secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
 
-    if (user.Role === 'admin') {
+    if (user.Role.toLowerCase() === 'admin') {
       res.redirect('http://localhost:5173/cottage');
     } else {
       res.redirect('http://localhost:5173/home');

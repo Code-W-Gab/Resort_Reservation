@@ -10,37 +10,37 @@ import AuthRoutes from './routes/AuthRoutes.mjs'
 import passport from 'passport'
 import setupPassport from './config/passport.mjs'
 
-setupPassport() // Set up Passport strategies
+setupPassport()
 
 const app = express()
+const NODE_ENV = process.env.NODE_ENV || 'development'
+
 app.use(express.json())
 app.use(cookieParser())
-app.use(passport.initialize()) // Initialize Passport middleware
+app.use(passport.initialize())
 app.use(cors({
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
   credentials: true
-})) 
+}))
 
 app.set('trust proxy', 1)
 
-// MongoDb
 connectDB()
-
-app.use(express.static('uploads')) // Serve uploads as static files
+app.use(express.static('uploads'))
 
 // Routes
-// Auth
 app.use('/auth', AuthRoutes)
-// Admin Cottage Routes
-app.use('/cottage', CottageRoutes) 
+app.use('/cottage', CottageRoutes)
 app.use('/reserve', ReserveRoutes)
-
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+  console.error('Error:', err.message)
+  res.status(err.status || 500).json({ 
+    message: NODE_ENV === 'production' ? 'Server error' : err.message 
+  });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`)
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server running in ${NODE_ENV} mode on http://localhost:${process.env.PORT || 8080}`)
 })
