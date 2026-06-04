@@ -39,7 +39,57 @@ const AuthControllers = {
 
       // Send OTP email
       try {
-        await sendEmail(Email, "Your Verification Code", `Your OTP code is: ${otp}`)
+        const otpEmail = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <style>
+                body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+                .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+                .header { text-align: center; color: #0066cc; margin-bottom: 20px; }
+                .otp-box { 
+                  background: #f0f8ff; 
+                  border: 2px solid #0066cc; 
+                  padding: 20px; 
+                  text-align: center; 
+                  border-radius: 8px; 
+                  margin: 20px 0;
+                }
+                .otp-code { 
+                  font-size: 32px; 
+                  font-weight: bold; 
+                  letter-spacing: 5px; 
+                  color: #0066cc;
+                  font-family: monospace;
+                }
+                .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h2>Serenity Resort</h2>
+                </div>
+                <p>Hi there,</p>
+                <p>Thank you for registering with Serenity Resort! To verify your email address, please use the OTP code below:</p>
+                
+                <div class="otp-box">
+                  <p style="color: #666; margin: 0 0 10px 0;">Your Verification Code</p>
+                  <div class="otp-code">${otp}</div>
+                </div>
+                
+                <p style="color: #666; font-size: 14px; text-align: center; ">This code expires in <strong>5 minutes</strong></p>
+                <p style="color: #666; font-size: 14px; text-align: center; ">If you didn't create this account, please ignore this email.</p>
+                
+                <div class="footer">
+                  <p>© 2026 Serenity Resort. All rights reserved.</p>
+                  <p><a href="https://resort-reservation-ten.vercel.app/" style="color: #0066cc; text-decoration: none;">Visit our website</a></p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `
+        await sendEmail(Email, "Your Serenity Resort Verification Code", otpEmail)
       } catch (emailError) {
         console.error("Failed to send OTP email:", emailError)
         // Optionally, you can choose to delete the user if email sending fails
@@ -247,7 +297,56 @@ const AuthControllers = {
 
       // Send OTP email
       try {
-        await sendEmail(Email, "Your New Verification Code", `Your new OTP code is: ${otp}`)
+        const resendEmail = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <style>
+                body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+                .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+                .header { text-align: center; color: #0066cc; margin-bottom: 20px; }
+                .otp-box { 
+                  background: #f0f8ff; 
+                  border: 2px solid #0066cc; 
+                  padding: 20px; 
+                  text-align: center; 
+                  border-radius: 8px; 
+                  margin: 20px 0;
+                }
+                .otp-code { 
+                  font-size: 32px; 
+                  font-weight: bold; 
+                  letter-spacing: 5px; 
+                  color: #0066cc;
+                  font-family: monospace;
+                }
+                .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h2>Serenity Resort</h2>
+                </div>
+                <p>Hi there,</p>
+                <p>Here's your new OTP code to verify your email:</p>
+                
+                <div class="otp-box">
+                  <p style="color: #666; margin: 0 0 10px 0;">Your New Verification Code</p>
+                  <div class="otp-code">${otp}</div>
+                </div>
+                
+                <p style="color: #666; font-size: 14px; text-align: center; ">This code expires in <strong>5 minutes</strong></p>
+                <p style="color: #999; font-size: 12px; text-align: center; ">If you didn't request this, you can safely ignore this email.</p>
+                
+                <div class="footer">
+                  <p>© 2026 Serenity Resort. All rights reserved.</p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `
+        await sendEmail(Email, "Your New Serenity Resort Verification Code", resendEmail)
       } catch (emailError) {
         console.error("Failed to send OTP email:", emailError)
         return res.status(500).json({
@@ -273,7 +372,7 @@ const AuthControllers = {
       if (!name || !email || !message) {
         return res.status(400).json({
           success: false,
-          message: "All fields are required"
+          message: "All fields are required"  
         })
       }
 

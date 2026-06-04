@@ -1,6 +1,6 @@
 import sgMail from '@sendgrid/mail'
 
-export const sendEmail = async (to, subject, text) => { 
+export const sendEmail = async (to, subject, html) => { 
   try {
     if (!process.env.SENDGRID_API_KEY) {
       console.error('SENDGRID_API_KEY not configured')
@@ -19,7 +19,7 @@ export const sendEmail = async (to, subject, text) => {
         name: 'Serenity Resort' 
       },
       subject,
-      html: text,
+      html,
       replyTo: process.env.EMAIL_USER  
     }
 
