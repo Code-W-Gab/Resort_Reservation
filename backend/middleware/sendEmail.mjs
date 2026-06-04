@@ -1,39 +1,25 @@
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail'
 
 export const sendEmail = async (to, subject, text) => { 
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('EMAIL_USER or EMAIL_PASS not configured')
-      throw new Error('Email configuration missing')
+    if (!process.env.SENDGRID_API_KEY) {
+      console.error('SENDGRID_API_KEY not configured')
+      throw new Error('Email service not configured')
     }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-    
-      port: 587,
-    
-      secure: false,
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-      tls: {
-        rejectUnauthorized: false,
-      },
-    
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-    
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to, 
+    const msg = {
+      to,
+      from: process.env.EMAIL_USER || 'noreply@serenityresort.com',
       subject,
       html: text
-    };
-    
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
+    }
+
+    await sgMail.send(msg)
+    console.log(`Email sent successfully to ${to}`)
   } catch (error) {
-    console.error('Error sending email:', error);
-  } 
+    console.error('Error sending email:', error.message)
+    throw error
+  }
 }
