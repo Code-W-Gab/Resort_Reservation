@@ -93,8 +93,8 @@ const AuthControllers = {
       // store inside cookie
       res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
-        sameSite: "lax",
+        secure: true,  // Must be true for cross-domain
+        sameSite: "none",  //  to allow cross-domain
         maxAge: 7 * 24 * 60 * 60 * 1000
       });
 
@@ -137,8 +137,8 @@ const AuthControllers = {
     try {
       res.cookie("token", "", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
-        sameSite: "lax",
+        secure: true, // true in production (HTTPS)
+        sameSite: "none", // "none" to allow cross-domain
         expires: new Date(0),
       });
 
@@ -168,9 +168,9 @@ const AuthControllers = {
     // Store token in cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
-      sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
+      secure: true,  // Must be true for cross-domain
+      sameSite: "none",  // to allow cross-domain
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     if (user.Role.toLocaleLowerCase() === 'admin') {
