@@ -80,7 +80,7 @@ export default function AddCottageModal({ onClose, fetchCottage }) {
       })
       .catch(err => {
         setIsLoading(false)
-        console.log(err)
+        toast.error(err.response?.data?.message || "Failed to add cottage. Please try again.")
       })
   }
 
