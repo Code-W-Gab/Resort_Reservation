@@ -9,11 +9,18 @@ export const sendEmail = async (to, subject, text) => {
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+    // Use a verified sender email or SendGrid default
+    const fromEmail = process.env.EMAIL_USER || 'sendgrid@example.com'
+
     const msg = {
       to,
-      from: process.env.EMAIL_USER || 'noreply@serenityresort.com',
+      from: {
+        email: process.env.EMAIL_USER || 'noreply@serenityresort.com',
+        name: 'Serenity Resort' 
+      },
       subject,
-      html: text
+      html: text,
+      replyTo: process.env.EMAIL_USER  
     }
 
     await sgMail.send(msg)

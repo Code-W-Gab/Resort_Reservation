@@ -19,7 +19,11 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize())
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: [
+    process.env.FRONTEND_URL || "http://localhost:5173",
+    'https://resort-reservation.onrender.com',
+    /\.vercel\.app$/ 
+  ],
   credentials: true,  // Allow credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

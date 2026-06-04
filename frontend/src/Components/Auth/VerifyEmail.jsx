@@ -83,11 +83,11 @@ export default function VerifyOTP() {
       <div className="absolute inset-0 bg-blue-500 opacity-40"></div>
       
       <div className="relative z-10">
-        <div className="text-center text-white bg-blue-600 w-80 sm:w-max-100 p-7 rounded-tl-xl rounded-tr-xl">
-          <h1 className="text-3xl sm:text-4xl font-semibold mb-2">Verify Email</h1>
+        <div className="text-center text-white bg-blue-600 w-80 sm:w-100 p-4 sm:p-5 rounded-tl-xl rounded-tr-xl">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Verify Email</h1>
           <p>Enter the OTP code sent to your email</p>
         </div>
-        <div className="p-6 sm:p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl w-100">
+        <div className="p-6 sm:p-7 bg-white flex flex-col gap-5 rounded-bl-xl rounded-br-xl w-80 sm:w-100">
           <div className="bg-blue-50 p-4 rounded-lg text-center">
             <p className="text-gray-700">Email: <span className="font-semibold">{email}</span></p>
           </div>
@@ -97,7 +97,7 @@ export default function VerifyOTP() {
             <input
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
               value={otp}
-              className="border border-gray-500 px-4 py-2.5 rounded-lg text-md text-center text-2xl tracking-widest"
+              className="border border-gray-500 px-4 py-2 rounded-lg text-md text-center text-2xl tracking-widest"
               type="text" 
               placeholder="000000" 
               maxLength="6"
