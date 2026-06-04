@@ -84,7 +84,7 @@ const AuthControllers = {
       const token = jwt.sign(
         { 
           id: user._id,
-          role: user.Role.toLowerCase(),
+          role: user.Role,
         },
         process.env.JWT_SECRET,
         { expiresIn: '7d' }
@@ -105,7 +105,7 @@ const AuthControllers = {
           id: user._id,
           name: user.FullName,
           email: user.Email,
-          role: user.Role.toLowerCase(),
+          role: user.Role,
         }
       })
     } catch (error) {
@@ -123,7 +123,7 @@ const AuthControllers = {
           id: user._id,
           name: user.FullName,
           email: user.Email,
-          role: user.Role.toLowerCase()
+          role: user.Role
         }
       })
     } catch (error) {
@@ -158,7 +158,7 @@ const AuthControllers = {
     const token = jwt.sign(
       { 
         id: user._id,
-        role: user.Role.toLowerCase(),
+        role: user.Role,
         name: user.FullName
       },
       process.env.JWT_SECRET,
@@ -173,7 +173,7 @@ const AuthControllers = {
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
 
-    if (user.Role.toLowerCase() === 'admin') {
+    if (user.Role === 'admin') {
       res.redirect('http://localhost:5173/cottage');
     } else {
       res.redirect('http://localhost:5173/home');
